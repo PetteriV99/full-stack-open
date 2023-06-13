@@ -1,4 +1,4 @@
-// Task 1.1: kurssitiedot, step1
+// Task 1.2: kurssitiedot, step1
 // This code is exactly done as instructed :) So obviously spaghetti
 
 const Header = (props) => {
@@ -7,13 +7,19 @@ const Header = (props) => {
   )
 }
 
+const Part = (props) => {
+  return (
+    <p>{props.part} {props.exercises}</p>
+  )
+}
+
 const Content = (props) => {
   return (
-    <>
-    <p>{props.part1} {props.exercises1}</p>
-    <p>{props.part2} {props.exercises2}</p>
-    <p>{props.part3} {props.exercises3}</p>
-    </>
+    <div>
+      <Part part={props.part1} exercises={props.exercises1}></Part>
+      <Part part={props.part2} exercises={props.exercises2}></Part>
+      <Part part={props.part3} exercises={props.exercises3}></Part>
+    </div>
   )
 }
 

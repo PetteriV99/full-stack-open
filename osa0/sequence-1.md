@@ -32,7 +32,7 @@ sequenceDiagram
 
     Note right of browser: The user writes something down in the input and clicks the save button
 
-    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note
+    browser->>server: POST https://studies.cs.helsinki.fi/exampleapp/new_note text/html 
     activate server
     server-->browser: Redirection
 

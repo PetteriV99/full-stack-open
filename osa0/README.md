@@ -1,6 +1,3 @@
-## Hakemisto
-
-
 sequence-1.md - tehtävä 0.4 
 
 sequence-2.md - tehtävä 0.5

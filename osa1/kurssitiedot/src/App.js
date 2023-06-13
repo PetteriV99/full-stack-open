@@ -1,4 +1,4 @@
-// Task 1.2: kurssitiedot, step1
+// Task 1.4: kurssitiedot, step1
 // This code is exactly done as instructed :) So obviously spaghetti
 
 const Header = (props) => {

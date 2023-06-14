@@ -7,7 +7,7 @@ const Button = (props) => (
 )
 
 const StatisticLine = (props) => (
-  <p>{props.text} {props.value}</p>
+  <tr><td>{props.text} {props.value}</td></tr>
 )
 
 const Statistics = (props) => {
@@ -16,19 +16,21 @@ const Statistics = (props) => {
   let values = props.values.good + (props.values.bad * -1)
 
   return (
-    <div>
+    <>
       {all !== 0 ?
-        <div>
-          <StatisticLine  text="Good" value={props.values.good}></StatisticLine >
-          <StatisticLine  text="Neutral" value={props.values.neutral}></StatisticLine >
-          <StatisticLine  text="Bad" value={props.values.neutral}></StatisticLine >
-          <StatisticLine  text='All' value={all}></StatisticLine >
-          <StatisticLine  text='Average' value={values / all}></StatisticLine >
-          <StatisticLine  text='Positive' value={props.values.good / all * 100 + ' %'}></StatisticLine >
-        </div>
+      <table>
+        <tbody>
+          <StatisticLine text="Good" value={props.values.good}></StatisticLine >
+          <StatisticLine text="Neutral" value={props.values.neutral}></StatisticLine >
+          <StatisticLine text="Bad" value={props.values.bad}></StatisticLine >
+          <StatisticLine text='All' value={all}></StatisticLine >
+          <StatisticLine text='Average' value={values / all}></StatisticLine >
+          <StatisticLine text='Positive' value={props.values.good / all * 100 + ' %'}></StatisticLine >
+        </tbody>
+      </table>
         : <p>No feedback given</p>
       }
-    </div>
+    </>
   )
 }
 
@@ -39,7 +41,7 @@ const App = () => {
   const [bad, setBad] = useState(0)
 
   return (
-    <div>
+    <>
       <h1>Give feedback</h1>
       <div>
         <Button handleClick={() => setGood(good + 1)} text="Good"></Button>
@@ -47,8 +49,8 @@ const App = () => {
         <Button handleClick={() => setBad(bad + 1)} text="Bad"></Button>
       </div>
       <h1>Stats</h1>
-      <Statistics values={{good, neutral, bad}}></Statistics>
-    </div>
+      <Statistics values={{ good, neutral, bad }}></Statistics>
+    </>
   )
 }
 

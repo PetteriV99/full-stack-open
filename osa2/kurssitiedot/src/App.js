@@ -20,13 +20,11 @@ const Content = (props) => {
     </div>
   )
 }
+
 const Total = (props) => {
-
-  let sum = 0;
-  props.parts.forEach(element => {
-    sum += element.exercises
-  });
-
+  const init = 0
+  const sum = props.parts.reduce((acc, current) =>
+    acc + current.exercises, init)
   return (
     <p>Total of {sum} exercises</p>
   )

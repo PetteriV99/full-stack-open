@@ -10,11 +10,16 @@ const Item = (props) => (
   <p>{props.text} {props.value}</p>
 )
 
+
+
 const App = () => {
   // tallenna napit omaan tilaansa
   const [good, setGood] = useState(0)
   const [neutral, setNeutral] = useState(0)
   const [bad, setBad] = useState(0)
+
+  let all = good + neutral + bad
+  let values = good + (bad * -1)
 
   return (
     <div>
@@ -29,6 +34,9 @@ const App = () => {
         <Item text="Good" value={good}></Item>
         <Item text="Neutral" value={neutral}></Item>
         <Item text="Bad" value={bad}></Item>
+        <Item text='All' value={all}></Item>
+        <Item text='Average' value={values / all}></Item>
+        <Item text='Positive' value={good / all * 100 + ' %'}></Item>
       </div>
     </div>
   )

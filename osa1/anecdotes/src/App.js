@@ -23,6 +23,12 @@ const handleVotes = (number, votes) => {
   return copy
 }
 
+const mostVotes = (array) => {
+  let max = array.reduce((a, b) => Math.max(a, b), -Infinity)
+  console.log(array.indexOf(max))
+  return array.indexOf(max);
+}
+
 const getRandomNumberBetweenValues = (min, max) => {
   return Math.floor(Math.random() * (max - min) + min);
 }
@@ -42,11 +48,16 @@ const App = () => {
   const [selected, setSelected] = useState(0)
   const [votes, setVotes] = useState(Array(8).fill(0))
 
+  let biggestNumber = mostVotes(votes)
+  
   return (
     <div>
+      <h1>Anecdote of the day</h1>
       <Anecdote text={anecdotes[selected]} votes={votes[selected]}></Anecdote>
       <Button text='next anecdote' handleClick={() => setSelected(getRandomNumberBetweenValues(0,7))}></Button>
       <Button text='vote' handleClick={() => setVotes(handleVotes(selected, votes))}></Button>
+      <h1>Anecdote with most votes</h1>
+      <Anecdote text={anecdotes[biggestNumber]} votes={votes[biggestNumber]}></Anecdote>
     </div>
   )
 }

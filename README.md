@@ -8,3 +8,5 @@ https://fullstackopen.com
         kurssitiedot
         unicafe
         anecdotes
+    osa2
+        kurssitiedot

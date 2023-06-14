@@ -21,6 +21,7 @@ const Content = (props) => {
   )
 }
 
+// Task 2.3
 const Total = (props) => {
   const init = 0
   const sum = props.parts.reduce((acc, current) =>

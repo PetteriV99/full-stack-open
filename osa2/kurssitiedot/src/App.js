@@ -1,6 +1,6 @@
 const Header = (props) => {
   return (
-    <h1>{props.course}</h1>
+    <h1>{props.name}</h1>
   )
 }
 
@@ -9,12 +9,12 @@ const Part = (props) => {
     <p>{props.list.name} {props.list.exercises}</p>
   )
 }
-
+// Fix antipattern
 const Content = (props) => {
   return (
     <div>
-      {props.parts.map((element, index) => (
-        <Part list={element} key={index}></Part>
+      {props.parts.map((part) => (
+        <Part list={part} key={part.id}></Part>
       )
       )}
     </div>
@@ -27,46 +27,73 @@ const Total = (props) => {
   const sum = props.parts.reduce((acc, current) =>
     acc + current.exercises, init)
   return (
-    <p>Total of {sum} exercises</p>
+    <b>Total of {sum} exercises</b>
   )
 }
 
 const Course = (props) => {
   return (
     <>
-      <Header course={props.course.name} />
-      <Content parts={props.course.parts} />
-      <Total parts={props.course.parts} />
+      {props.course.map(course => (
+        <div key={course.id}>
+          <Header name={course.name}/>
+          <Content parts={course.parts}/>
+          <Total parts={course.parts}/>
+        </div>
+      ))}
     </>
   )
 }
 
 const App = () => {
 
-  const course = {
-    name: 'Half Stack application development',
-    parts: [
-      {
-        name: 'Fundamentals of React',
-        exercises: 10
-      },
-      {
-        name: 'Using props to pass data',
-        exercises: 7
-      },
-      {
-        name: 'State of a component',
-        exercises: 14
-      },
-      {
-        name: 'Redux',
-        exercises: 11
-      }
-    ]
-  }
+  const courses = [
+    {
+      name: 'Half Stack application development',
+      id: 1,
+      parts: [
+        {
+          name: 'Fundamentals of React',
+          exercises: 10,
+          id: 1
+        },
+        {
+          name: 'Using props to pass data',
+          exercises: 7,
+          id: 2
+        },
+        {
+          name: 'State of a component',
+          exercises: 14,
+          id: 3
+        },
+        {
+          name: 'Redux',
+          exercises: 11,
+          id: 4
+        }
+      ]
+    },
+    {
+      name: 'Node.js',
+      id: 2,
+      parts: [
+        {
+          name: 'Routing',
+          exercises: 3,
+          id: 1
+        },
+        {
+          name: 'Middlewares',
+          exercises: 7,
+          id: 2
+        }
+      ]
+    }
+  ]
 
   return (
-    <Course course={course} />
+    <Course course={courses} />
   )
 }
 

@@ -6,7 +6,7 @@ const Button = (props) => (
   </button>
 )
 
-const Item = (props) => (
+const StatisticLine = (props) => (
   <p>{props.text} {props.value}</p>
 )
 
@@ -19,12 +19,12 @@ const Statistics = (props) => {
     <div>
       {all !== 0 ?
         <div>
-          <Item text="Good" value={props.values.good}></Item>
-          <Item text="Neutral" value={props.values.neutral}></Item>
-          <Item text="Bad" value={props.values.neutral}></Item>
-          <Item text='All' value={all}></Item>
-          <Item text='Average' value={values / all}></Item>
-          <Item text='Positive' value={props.values.good / all * 100 + ' %'}></Item>
+          <StatisticLine  text="Good" value={props.values.good}></StatisticLine >
+          <StatisticLine  text="Neutral" value={props.values.neutral}></StatisticLine >
+          <StatisticLine  text="Bad" value={props.values.neutral}></StatisticLine >
+          <StatisticLine  text='All' value={all}></StatisticLine >
+          <StatisticLine  text='Average' value={values / all}></StatisticLine >
+          <StatisticLine  text='Positive' value={props.values.good / all * 100 + ' %'}></StatisticLine >
         </div>
         : <p>No feedback given</p>
       }
@@ -55,7 +55,7 @@ const App = () => {
 export default App
 
 /*
-<Item text='All' value={all}></Item>
-<Item text='Average' value={values / all}></Item>
-<Item text='Positive' value={good / all * 100 + ' %'}></Item>
+<StatisticLine  text='All' value={all}></StatisticLine >
+<StatisticLine  text='Average' value={values / all}></StatisticLine >
+<StatisticLine  text='Positive' value={good / all * 100 + ' %'}></StatisticLine >
 */

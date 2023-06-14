@@ -1,9 +1,26 @@
 import { useState } from 'react'
 
+const Anecdote = (props) => {
+  return (
+    <>
+      <p>{props.text}</p>
+      <p>has {props.votes} votes</p>
+    </>
+  )
+}
+
 const Button = (props) => {
   return (
-    <button onClick={props.handleClick}>Next Anecdote</button>
+    <button onClick={props.handleClick}>{props.text}</button>
   )
+}
+
+const handleVotes = (number, votes) => {
+  console.log(number)
+  const copy = [...votes]
+  copy[number] += 1
+  console.log(copy)
+  return copy
 }
 
 const getRandomNumberBetweenValues = (min, max) => {
@@ -21,15 +38,15 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
     'The only way to go fast, is to go well.'
   ]
-   
-  const [selected, setSelected] = useState(0)
 
-  console.log(getRandomNumberBetweenValues(0, anecdotes.length))
+  const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(Array(8).fill(0))
 
   return (
     <div>
-      <p>{anecdotes[selected]}</p>
-      <Button handleClick={() => setSelected(getRandomNumberBetweenValues(0, anecdotes.length))}></Button>
+      <Anecdote text={anecdotes[selected]} votes={votes[selected]}></Anecdote>
+      <Button text='next anecdote' handleClick={() => setSelected(getRandomNumberBetweenValues(0,7))}></Button>
+      <Button text='vote' handleClick={() => setVotes(handleVotes(selected, votes))}></Button>
     </div>
   )
 }

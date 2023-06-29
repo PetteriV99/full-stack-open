@@ -10,3 +10,4 @@ https://fullstackopen.com
         anecdotes
     osa2
         kurssitiedot
+        puhelinluettelo

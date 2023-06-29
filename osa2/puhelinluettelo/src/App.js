@@ -2,13 +2,14 @@ import { useState } from 'react'
 
 const App = () => {
   const [persons, setPersons] = useState([
-    { 
-      name: 'Arto Hellas',
-      number: '0400231231' 
-    }
+    { name: 'Arto Hellas', number: '040-123456' },
+    { name: 'Ada Lovelace', number: '39-44-5323523' },
+    { name: 'Dan Abramov', number: '12-43-234345' },
+    { name: 'Mary Poppendieck', number: '39-23-6423122' }
   ]) 
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
+  const [filterQuery, setFilterQuery] = useState('')
 
   const addPerson = (event) => {
     event.preventDefault()
@@ -27,6 +28,9 @@ const App = () => {
     }
   }
 
+  const filteredPersons = false ? persons : persons.filter(
+    person => person.name.toLocaleLowerCase().includes(filterQuery.toLocaleLowerCase()))
+
   const handleChangeName = (event) => {
     console.log(event.target.value)
     setNewName(event.target.value)
@@ -37,9 +41,20 @@ const App = () => {
     setNewNumber(event.target.value)
   }
 
+  const handleChangeQuery = (event) => {
+    console.log(event.target.value)
+    setFilterQuery(event.target.value)
+  }
+
   return (
     <div>
       <h2>Phonebook</h2>
+      <form>
+        <div>
+          filter shown with <input value={filterQuery} onChange={handleChangeQuery}></input>
+        </div>
+      </form>
+      <h2>add a new</h2>
       <form onSubmit={addPerson}>
         <div>
           name: <input value={newName} onChange={handleChangeName}/>
@@ -52,7 +67,7 @@ const App = () => {
         </div>
       </form>
       <h2>Numbers</h2>
-      {persons.map(person => <p key={person.name}>{person.name} {person.number}</p>)}
+      {filteredPersons.map(person => <p key={person.name}>{person.name} {person.number}</p>)}
     </div>
   )
 

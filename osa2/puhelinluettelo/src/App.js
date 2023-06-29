@@ -11,8 +11,14 @@ const App = () => {
     const personObject = {
       name: newName
     }
-    setPersons(persons.concat(personObject))
-    setNewName('')
+    const checkSimilar = persons.find(person => person.name === personObject.name)
+    if (checkSimilar) {
+      alert(`${newName} is already added to phonebook`)
+    }
+    else {
+      setPersons(persons.concat(personObject))
+      setNewName('')
+    }
   }
 
   const handleChange = (event) => {

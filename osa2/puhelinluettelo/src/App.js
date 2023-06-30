@@ -61,11 +61,14 @@ const App = () => {
     if (checkSimilar) {
       alert(`${newName} is already added to phonebook`)
     }
-    else {
-      setPersons(persons.concat(personObject))
+    axios
+    .post('http://localhost:3001/persons', personObject)
+    .then(response => {
+      console.log(response)
+      setPersons(persons.concat(response.data))
       setNewName('')
       setNewNumber('')
-    }
+    })
   }
 
   const filteredPersons = false ? persons : persons.filter(

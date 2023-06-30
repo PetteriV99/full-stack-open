@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import axios from 'axios'
+import personService from './services/persons'
 
 const Persons = (params) => {
   return (
@@ -40,12 +40,10 @@ const App = () => {
   const [filterQuery, setFilterQuery] = useState('')
 
   const hook = () => {
-    console.log('effect')
-    axios
-      .get('http://localhost:3001/persons')
-      .then(response => {
-        console.log('promise fulfilled')
-        setPersons(response.data)
+    personService
+      .getAll()
+      .then(personsData => {
+        setPersons(personsData)
       })
   }
   
@@ -61,11 +59,10 @@ const App = () => {
     if (checkSimilar) {
       alert(`${newName} is already added to phonebook`)
     }
-    axios
-    .post('http://localhost:3001/persons', personObject)
-    .then(response => {
-      console.log(response)
-      setPersons(persons.concat(response.data))
+    personService
+    .create(personObject)
+    .then(returnedPerson => {
+      setPersons(persons.concat(returnedPerson))
       setNewName('')
       setNewNumber('')
     })
@@ -75,17 +72,14 @@ const App = () => {
     person => person.name.toLocaleLowerCase().includes(filterQuery.toLocaleLowerCase()))
 
   const handleChangeName = (event) => {
-    console.log(event.target.value)
     setNewName(event.target.value)
   }
 
   const handleChangeNumber = (event) => {
-    console.log(event.target.value)
     setNewNumber(event.target.value)
   }
 
   const handleChangeQuery = (event) => {
-    console.log(event.target.value)
     setFilterQuery(event.target.value)
   }
 

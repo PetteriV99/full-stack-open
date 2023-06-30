@@ -1,9 +1,20 @@
 import { useState, useEffect } from 'react'
 import personService from './services/persons'
 
+const Person = (params) => {
+  return (
+    <div>
+      {params.values.name} {params.values.number}
+      <button onClick={() => params.removePerson(params.values.id)}>delete</button>
+    </div>
+  )
+}
+
 const Persons = (params) => {
   return (
-    params.values.map(person => <p key={person.id}>{person.name} {person.number}</p>)
+    params.values.map(person => 
+      <Person key={person.id} values={person} removePerson={params.removePerson}></Person>
+    )
   )
 }
 
@@ -46,7 +57,7 @@ const App = () => {
         setPersons(personsData)
       })
   }
-  
+
   useEffect(hook, [])
 
   const addPerson = (event) => {
@@ -60,12 +71,24 @@ const App = () => {
       alert(`${newName} is already added to phonebook`)
     }
     personService
-    .create(personObject)
-    .then(returnedPerson => {
-      setPersons(persons.concat(returnedPerson))
-      setNewName('')
-      setNewNumber('')
-    })
+      .create(personObject)
+      .then(returnedPerson => {
+        setPersons(persons.concat(returnedPerson))
+        setNewName('')
+        setNewNumber('')
+      })
+  }
+
+  const removePerson = (id) => {
+    console.log(id)
+    const confirmed = window.confirm(`Delete ${persons[id - 1].name} ?`)
+    if (confirmed) {
+      personService
+        .remove(id)
+        .then(returnedPerson => {
+          setPersons(persons.filter(p => p.id !== id))
+        })
+    }
   }
 
   const filteredPersons = false ? persons : persons.filter(
@@ -96,7 +119,7 @@ const App = () => {
         onChangeNumber={handleChangeNumber}
       />
       <h2>Numbers</h2>
-      <Persons values={filteredPersons} />
+      <Persons values={filteredPersons} removePerson={removePerson} />
     </div>
   )
 

@@ -12,7 +12,7 @@ const Person = (params) => {
 
 const Persons = (params) => {
   return (
-    params.values.map(person => 
+    params.values.map(person =>
       <Person key={person.id} values={person} removePerson={params.removePerson}></Person>
     )
   )
@@ -68,15 +68,25 @@ const App = () => {
     }
     const checkSimilar = persons.find(person => person.name === personObject.name)
     if (checkSimilar) {
-      alert(`${newName} is already added to phonebook`)
+      const confirmed = window.confirm(`${newName} is already added to phonebook, replace the old number with a new one?`)
+      if (confirmed) {
+        const id = checkSimilar.id
+        personService
+          .update(id, personObject)
+          .then(returnedPerson => {
+            setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
+          })
+      }
     }
-    personService
-      .create(personObject)
-      .then(returnedPerson => {
-        setPersons(persons.concat(returnedPerson))
-        setNewName('')
-        setNewNumber('')
-      })
+    else {
+      personService
+        .create(personObject)
+        .then(returnedPerson => {
+          setPersons(persons.concat(returnedPerson))
+          setNewName('')
+          setNewNumber('')
+        })
+    }
   }
 
   const removePerson = (id) => {

@@ -1,6 +1,30 @@
 import { useState, useEffect } from 'react'
 import personService from './services/persons'
 
+const ErrorNotification = ({ message }) => {
+  if (message === '') {
+    return null
+  }
+
+  return (
+    <div className="error">
+      {message}
+    </div>
+  )
+}
+
+const SuccessNotification = ({ message }) => {
+  if (message === '') {
+    return null
+  }
+
+  return (
+    <div className="success">
+      {message}
+    </div>
+  )
+}
+
 const Person = (params) => {
   return (
     <div>
@@ -49,6 +73,8 @@ const App = () => {
   const [newName, setNewName] = useState('')
   const [newNumber, setNewNumber] = useState('')
   const [filterQuery, setFilterQuery] = useState('')
+  const [errorMessage, setErrorMessage] = useState('')
+  const [successMessage, setSuccessMessage] = useState('')
 
   const hook = () => {
     personService
@@ -75,6 +101,16 @@ const App = () => {
           .update(id, personObject)
           .then(returnedPerson => {
             setPersons(persons.map(person => person.id !== id ? person : returnedPerson))
+            setSuccessMessage(`Changed number for ${personObject.name}`)
+            setTimeout(() => {
+              setSuccessMessage('')
+            }, 5000)
+          })
+          .catch(error => {
+            setErrorMessage(`${error}`)
+            setTimeout(() => {
+              setErrorMessage('')
+            }, 5000)
           })
       }
     }
@@ -83,6 +119,10 @@ const App = () => {
         .create(personObject)
         .then(returnedPerson => {
           setPersons(persons.concat(returnedPerson))
+          setSuccessMessage(`Added ${personObject.name}`)
+          setTimeout(() => {
+            setSuccessMessage('')
+          }, 5000)
           setNewName('')
           setNewNumber('')
         })
@@ -90,14 +130,25 @@ const App = () => {
   }
 
   const removePerson = (id) => {
-    console.log(id)
-    const confirmed = window.confirm(`Delete ${persons[id - 1].name} ?`)
+    const person = persons.find(p => p.id === id)
+    const confirmed = window.confirm(`Delete ${person.name} ?`)
     if (confirmed) {
       personService
         .remove(id)
-        .then(returnedPerson => {
+        .then(() => {
           setPersons(persons.filter(p => p.id !== id))
+          setSuccessMessage(`Removed ${person.name}`)
+          setTimeout(() => {
+            setSuccessMessage('')
+          }, 5000)
         })
+        .catch(error => {
+          setErrorMessage(error)
+          setTimeout(() => {
+            setErrorMessage('')
+          }, 5000)
+        })
+        setPersons(persons.filter(p => p.id !== id))
     }
   }
 
@@ -119,6 +170,8 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
+      <ErrorNotification message={errorMessage} />
+      <SuccessNotification message={successMessage} />
       <FilterForm value={filterQuery} onChange={handleChangeQuery} />
       <h2>add a new</h2>
       <PersonForm
@@ -136,3 +189,4 @@ const App = () => {
 }
 
 export default App
+

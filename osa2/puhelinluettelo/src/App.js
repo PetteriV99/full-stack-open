@@ -107,7 +107,7 @@ const App = () => {
             }, 5000)
           })
           .catch(error => {
-            setErrorMessage(`${error}`)
+            setErrorMessage(`${newName} does not exist on the server anymore`)
             setTimeout(() => {
               setErrorMessage('')
             }, 5000)
@@ -143,7 +143,7 @@ const App = () => {
           }, 5000)
         })
         .catch(error => {
-          setErrorMessage(error)
+          setErrorMessage(`Information of ${person.name} has already been removed from the server`)
           setTimeout(() => {
             setErrorMessage('')
           }, 5000)

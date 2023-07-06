@@ -102,6 +102,7 @@ const App = () => {
   useEffect(hook, [])
 
   const handleChangeQuery = (event) => {
+    setShowCountry(false)
     setFilterQuery(event.target.value)
   }
 
@@ -112,6 +113,8 @@ const App = () => {
     setShowCountry(true)
     setFilterQuery(event.target.name)
   }
+
+  console.log(filterQuery)
 
   return (
     <div>

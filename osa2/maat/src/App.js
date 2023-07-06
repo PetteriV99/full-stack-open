@@ -3,35 +3,59 @@ import countryService from './services/countries'
 import weatherService from './services/weather'
 
 const Countries = (params) => {
-
-  const filteredCountries = params.showOneCountry ? [] : params.values.filter(country => country.name.common.toLocaleLowerCase().includes(params.query.toLocaleLowerCase()))
-  if (filteredCountries.length < 10 && filteredCountries.length !== 1) {
-    return (
-      <div>{filteredCountries.map(country =>
-        <div key={country.name.common}>
-          {country.name.common}
-          <button name={country.name.common} onClick={params.onClick}>show</button>
-        </div>
-      )}
+  if (!params.values) {
+    return ("error getting country data")
+  }
+  if (params.values.length > 10) {
+    return ("too many matches, adjust filter")
+  }
+  return (
+    <div>{params.values.map(country =>
+      <div key={country.name.common}>
+        {country.name.common}
+        <button name={country.name.common} onClick={params.onClick}>show</button>
       </div>
-    )
-  }
-  else if (filteredCountries.length === 1) {
-    return (<div>
-      <CountryInfo weather={params.weather} values={filteredCountries[0]}></CountryInfo>
-    </div>)
-  }
-  else { return (<p>Too many countries, adjust filter</p>) }
+    )}
+    </div>
+  )
 }
 
 const WeatherInfo = (params) => {
-  console.log(params)
+
+  const [weather, setWeather] = useState(null)
+
+  useEffect(() => {
+    const weatherData = (lat, lon) => {
+      weatherService.getWeatherCapital(lat, lon)
+        .then(weatherData => {
+          setWeather(weatherData)
+        })
+        .catch(error => {
+          console.log(error)
+        })
+    }
+    weatherData(params.values.latlng[0], params.values.latlng[1])
+  }, [params])
+
   return (
-  <h2>Weather</h2>
+    <div>
+      <h2>Weather</h2>
+      {weather ?
+        <div>
+          <p>temperature {weather.current.temp} Celsius</p>
+          <img src={`https://openweathermap.org/img/wn/${weather.current.weather[0].icon}@2x.png`}></img>
+          <p>wind {weather.current.wind_speed} m/s</p>
+        </div>
+        :
+        'error getting temp'}
+    </div>
   )
 }
 
 const CountryInfo = (params) => {
+  if (!params.values) {
+    return ("error getting country info")
+  }
   return (
     <div>
       <h1>{params.values.name.common}</h1>
@@ -40,11 +64,11 @@ const CountryInfo = (params) => {
       <h3>languages:</h3>
       <ul>
         {Object.entries(params.values.languages).map(([key, value]) => {
-          return(<li key={key}>{value}</li>)
+          return (<li key={key}>{value}</li>)
         })}
       </ul>
       <img src={params.values.flags.png} alt={`Flag of ${params.values.name.common}`}></img>
-      <WeatherInfo values={params.weather}></WeatherInfo>
+      <WeatherInfo values={params.values}></WeatherInfo>
     </div>
   )
 }
@@ -61,10 +85,8 @@ const FilterForm = (params) => {
 
 const App = () => {
   const [countries, setCountries] = useState([])
-  const [singleCountry, setSingleCountry] = useState('')
   const [filterQuery, setFilterQuery] = useState('')
   const [showCountry, setShowCountry] = useState(false)
-  const [weather, setWeather] = useState(null)
 
   const hook = () => {
     countryService
@@ -79,33 +101,22 @@ const App = () => {
 
   useEffect(hook, [])
 
-  const weatherData = (lat, lon) => {
-    weatherService.getWeatherCapital(lat, lon)
-    .then(weatherData => {
-      setWeather(weatherData)
-    })
-    .catch(error => {
-      console.log(error)
-    })
-  }
-
   const handleChangeQuery = (event) => {
     setFilterQuery(event.target.value)
   }
 
-  const countryFilter = countries.filter(country => country.name.common.toLocaleLowerCase().includes(singleCountry.toLocaleLowerCase()))[0]
+  const countryFilter = countries.filter(country => country.name.common.toLocaleLowerCase().includes(filterQuery.toLocaleLowerCase()))
+  const showOneCountry = countryFilter.length === 1
 
   const handleClick = (event) => {
     setShowCountry(true)
-    setSingleCountry(event.target.name)
-    weatherData(countryFilter.latlng[0], countryFilter.latlng[1])
+    setFilterQuery(event.target.name)
   }
 
   return (
     <div>
       <FilterForm value={filterQuery} onChange={handleChangeQuery} />
-      <Countries onClick={handleClick} weather={weather} query={filterQuery} values={countries} showOneCountry={showCountry}></Countries>
-      {showCountry ? <CountryInfo weather={weather} values={countryFilter}></CountryInfo> : null}
+      {(showCountry || showOneCountry) ? <CountryInfo values={countryFilter[0]}></CountryInfo> : <Countries onClick={handleClick} values={countryFilter}></Countries>}
     </div>
   )
 

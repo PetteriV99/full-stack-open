@@ -19,15 +19,15 @@ const Countries = (params) => {
   else if (filteredCountries.length === 1) {
     return (<div>
       <CountryInfo values={filteredCountries[0]}></CountryInfo>
-      <WeatherInfo></WeatherInfo>
     </div>)
   }
   else { return (<p>Too many countries, adjust filter</p>) }
 }
 
 const WeatherInfo = (params) => {
-  console.log(params)
-  return (<h2>Weather</h2>)
+  return (
+  <h2>Weather</h2>
+  )
 }
 
 const CountryInfo = (params) => {
@@ -43,6 +43,7 @@ const CountryInfo = (params) => {
         })}
       </ul>
       <img src={params.values.flags.png} alt={`Flag of ${params.values.name.common}`}></img>
+      <WeatherInfo values={params.values}></WeatherInfo>
     </div>
   )
 }
@@ -62,6 +63,7 @@ const App = () => {
   const [singleCountry, setSingleCountry] = useState('')
   const [filterQuery, setFilterQuery] = useState('')
   const [showCountry, setShowCountry] = useState(false)
+  const [weather, setWeather] = useState(null)
 
   const hook = () => {
     countryService
@@ -76,24 +78,33 @@ const App = () => {
 
   useEffect(hook, [])
 
+  const weatherData = (lat, lon) => {
+    weatherService.getWeatherCapital(lat, lon)
+    .then(weatherData => {
+      setWeather(weatherData)
+    })
+    .catch(error => {
+      console.log(error)
+    })
+  }
+
   const handleChangeQuery = (event) => {
     setFilterQuery(event.target.value)
   }
 
   const countryFilter = countries.filter(country => country.name.common.toLocaleLowerCase().includes(singleCountry.toLocaleLowerCase()))[0]
-  console.log(countryFilter)
 
   const handleClick = (event) => {
     setShowCountry(true)
-    console.log(event.target.name)
     setSingleCountry(event.target.name)
+    weatherData(countryFilter.latlng[0], countryFilter.latlng[1])
   }
 
   return (
     <div>
       <FilterForm value={filterQuery} onChange={handleChangeQuery} />
-      <Countries onClick={handleClick} query={filterQuery} values={countries} showOneCountry={showCountry}></Countries>
-      {showCountry ? <CountryInfo values={countryFilter}></CountryInfo> : null}
+      <Countries onClick={handleClick} weather={weather} query={filterQuery} values={countries} showOneCountry={showCountry}></Countries>
+      {showCountry ? <CountryInfo weather={weather} values={countryFilter}></CountryInfo> : null}
     </div>
   )
 

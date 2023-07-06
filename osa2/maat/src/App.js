@@ -18,13 +18,14 @@ const Countries = (params) => {
   }
   else if (filteredCountries.length === 1) {
     return (<div>
-      <CountryInfo values={filteredCountries[0]}></CountryInfo>
+      <CountryInfo weather={params.weather} values={filteredCountries[0]}></CountryInfo>
     </div>)
   }
   else { return (<p>Too many countries, adjust filter</p>) }
 }
 
 const WeatherInfo = (params) => {
+  console.log(params)
   return (
   <h2>Weather</h2>
   )
@@ -43,7 +44,7 @@ const CountryInfo = (params) => {
         })}
       </ul>
       <img src={params.values.flags.png} alt={`Flag of ${params.values.name.common}`}></img>
-      <WeatherInfo values={params.values}></WeatherInfo>
+      <WeatherInfo values={params.weather}></WeatherInfo>
     </div>
   )
 }

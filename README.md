@@ -14,3 +14,5 @@ Weather API used: https://openweathermap.org/api/one-call-3
         kurssitiedot
         puhelinluettelo
         maat
+    osa3
+        puhelinluettelo

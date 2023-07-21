@@ -15,4 +15,5 @@ Weather API used: https://openweathermap.org/api/one-call-3
         puhelinluettelo
         maat
     osa3
-        puhelinluettelo
+        puhelinluettelo (https://github.com/PetteriV99/full-stack-open-part-3)
+

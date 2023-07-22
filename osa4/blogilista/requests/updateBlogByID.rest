@@ -1,0 +1,8 @@
+PUT http://localhost:3003/api/blogs/64bb10d3fbec278b975b4d25
+
+{
+  "title": "The Journey of Coding",
+  "author": "CodeMaster",
+  "url": "example.com/coding-journey",
+  "likes": 23
+}

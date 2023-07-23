@@ -6,15 +6,17 @@ const dummy = (blogs) => {
 }
 
 const totalLikes = (blogs) => {
-  let likes = 0
-  blogs.map(blog => {
-    // Can't use += because of eslint :)
-    likes = likes + blog.likes
+  return blogs.reduce((total, blog) => total + blog.likes, 0)
+}
+
+const favouriteBlog = (blogs) => {
+  return blogs.reduce((mostLikedBlog, currentBlog) => {
+    return currentBlog.likes > mostLikedBlog.likes ? currentBlog : mostLikedBlog
   })
-  return likes
 }
 
 module.exports = {
   dummy,
-  totalLikes
+  totalLikes,
+  favouriteBlog
 }

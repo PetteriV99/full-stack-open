@@ -26,6 +26,14 @@ test('there are as many blogs as in the initial list', async () => {
   expect(response.body).toHaveLength(data.listWithManyBlogs.length)
 })
 
+test('identifying property is named id', async () => {
+  const response = await api.get('/api/blogs')
+
+  response.body.forEach((blog) => {
+    expect(blog.id).toBeDefined()
+  })
+})
+
 afterAll(async () => {
   await mongoose.connection.close()
 })

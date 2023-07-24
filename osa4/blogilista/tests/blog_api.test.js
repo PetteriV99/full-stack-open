@@ -7,8 +7,10 @@ const data = require('./data')
 
 beforeEach(async () => {
   await Blog.deleteMany({})
-  let blogObject = new Blog(data.listWithOneBlog[0])
-  await blogObject.save()
+  for (const blog of data.listWithManyBlogs) {
+    let blogObject = new Blog(blog)
+    await blogObject.save()
+  }
 })
 
 test('blogs are returned as json', async () => {
@@ -21,7 +23,7 @@ test('blogs are returned as json', async () => {
 test('there are as many blogs as in the initial list', async () => {
   const response = await api.get('/api/blogs')
 
-  expect(response.body).toHaveLength(data.listWithOneBlog.length)
+  expect(response.body).toHaveLength(data.listWithManyBlogs.length)
 })
 
 afterAll(async () => {

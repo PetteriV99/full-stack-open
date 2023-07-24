@@ -34,6 +34,20 @@ test('identifying property is named id', async () => {
   })
 })
 
+test('new blogs can be added with a POST request', async () => {
+  const newBlogObject = data.listWithOneBlog[0]
+  await api
+    .post('/api/blogs')
+    .send(newBlogObject)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+  const response = await api.get('/api/blogs')
+  const contents = response.body.map(r => r.title)
+
+  expect(response.body).toHaveLength(data.listWithManyBlogs.length + 1)
+  expect(contents).toContain(data.listWithOneBlog[0].title)
+})
+
 afterAll(async () => {
   await mongoose.connection.close()
 })

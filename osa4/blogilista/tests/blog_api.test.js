@@ -56,10 +56,19 @@ test('new blog post without likes defined will be returned with likes property',
     .send(newBlogObject)
     .expect(201)
     .expect('Content-Type', /application\/json/)
-  console.log(result.body)
 
   expect(result.body.likes).toBeDefined()
   expect(result.body.likes).toBe(0)
+})
+
+test('new blog post without title or url will not be created', async () => {
+  const newBlogObject = data.listWithOneBlog[0]
+  delete newBlogObject.title
+  delete newBlogObject.url
+  await api
+    .post('/api/blogs')
+    .send(newBlogObject)
+    .expect(400)
 })
 
 afterAll(async () => {

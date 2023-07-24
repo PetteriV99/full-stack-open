@@ -48,6 +48,20 @@ test('new blogs can be added with a POST request', async () => {
   expect(contents).toContain(data.listWithOneBlog[0].title)
 })
 
+test('new blog post without likes defined will be returned with likes property', async () => {
+  const newBlogObject = data.listWithOneBlog[0]
+  newBlogObject.likes = undefined
+  const result = await api
+    .post('/api/blogs')
+    .send(newBlogObject)
+    .expect(201)
+    .expect('Content-Type', /application\/json/)
+  console.log(result.body)
+
+  expect(result.body.likes).toBeDefined()
+  expect(result.body.likes).toBe(0)
+})
+
 afterAll(async () => {
   await mongoose.connection.close()
 })

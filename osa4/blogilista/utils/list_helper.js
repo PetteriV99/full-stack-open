@@ -15,6 +15,23 @@ const favouriteBlog = (blogs) => {
   })
 }
 
+const mostBlogs = (blogs) => {
+  const authors = []
+  blogs.forEach(blog => {
+    if (!authors.some(e => e.author === blog.author)) {
+      let object = { author: blog.author, blogs: 1 }
+      authors.push(object)
+    }
+    else {
+      let objectToReplace = authors.find(e => e.author === blog.author)
+      Object.assign(objectToReplace, { author: blog.author, blogs: objectToReplace.blogs + 1 })
+    }
+  })
+  return authors.reduce((mostBlogs, currentBlog) => {
+    return currentBlog.blogs > mostBlogs.blogs ? currentBlog : mostBlogs
+  })
+}
+
 const mostLikes = (blogs) => {
   let authors = []
   blogs.map(blog => {
@@ -36,5 +53,6 @@ module.exports = {
   dummy,
   totalLikes,
   favouriteBlog,
-  mostLikes
+  mostLikes,
+  mostBlogs
 }

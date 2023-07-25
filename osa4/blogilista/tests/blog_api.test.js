@@ -85,6 +85,21 @@ describe('when there is initial data for blogs', () => {
     })
   })
 
+  describe('updating a blog', () => {
+    test('status code 200 and result json is returned if blog is updated', async () => {
+      const blogsAtStart = await data.blogInDb()
+      const blogObject = blogsAtStart[0]
+      blogObject.likes = 14
+
+      const result = await api.put(`/api/blogs/${blogObject.id}`).send(blogObject).expect(200).expect('Content-Type', /application\/json/)
+      const blogsAtEnd = await data.blogInDb()
+
+      expect(result.body.likes).toBe(blogObject.likes)
+      expect(blogsAtEnd).toHaveLength(data.listWithManyBlogs.length)
+
+    })
+  })
+
 })
 
 afterAll(async () => {

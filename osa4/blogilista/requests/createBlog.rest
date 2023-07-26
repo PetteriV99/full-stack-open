@@ -1,50 +1,10 @@
-POST http://localhost:3003/api/blogs
+POST http://localhost:3001/api/blogs
 Content-Type: application/json
 
 {
   "title": "Jussin blogi",
   "author": "Jussi",
   "url": "google.fi",
-  "likes": 10
+  "likes": 10,
+  "userId": "64c10c9fa83c58d6e97fc0fb"
 }
-###
-POST http://localhost:3003/api/blogs
-Content-Type: application/json
-
-{
-  "title": "The Journey of Coding",
-  "author": "CodeMaster",
-  "url": "example.com/coding-journey",
-  "likes": 23
-}
-###
-POST http://localhost:3003/api/blogs
-Content-Type: application/json
-
-{
-  "title": "Travel Diaries",
-  "author": "Wanderlust",
-  "url": "wanderlustblog.com/travel-diaries",
-  "likes": 5
-}
-###
-POST http://localhost:3003/api/blogs
-Content-Type: application/json
-
-{
-  "title": "Cooking Adventures",
-  "author": "FoodieNinja",
-  "url": "foodieninja-blog.com/cooking-adventures",
-  "likes": 50
-}
-###
-POST http://localhost:3003/api/blogs
-Content-Type: application/json
-
-{
-  "title": "Gardening Tips",
-  "author": "GreenThumb",
-  "url": "greenthumbgarden.com/gardening-tips",
-  "likes": 2
-}
-

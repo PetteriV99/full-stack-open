@@ -20,7 +20,7 @@ const errorHandler = (error, request, response, next) => {
   } else if (error.name === 'ValidationError') {
     return response.status(400).json({ error: error.message })
 
-  } else if (error.name ===  'JsonWebTokenError') {
+  } else if (error.name === 'JsonWebTokenError') {
     return response.status(400).json({ error: 'token missing or invalid' })
   }
 
@@ -32,7 +32,7 @@ const tokenExtractor = (request, response, next) => {
   const authorization = request.get('authorization')
   if (authorization && authorization.startsWith('Bearer ')) {
     authorization.replace('Bearer ', '')
-    return authorization.replace('Bearer ', '')
+    console.log(authorization)
   }
   next()
 }

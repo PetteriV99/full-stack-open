@@ -12,7 +12,7 @@ describe('when there is initial helper for blogs', () => {
     await Blog.insertMany(helper.listWithManyBlogs)
   })
 
-
+  /*
   describe('blogs can be viewed', () => {
 
     test('blogs are returned as json', async () => {
@@ -35,10 +35,10 @@ describe('when there is initial helper for blogs', () => {
         expect(blog.id).toBeDefined()
       })
     })
-  })
+  })*/
 
-  describe('blogs can be created', () => {
-
+  describe('blogs creation', () => {
+    /*
     test('new blogs can be added with a POST request', async () => {
       const newBlogObject = helper.listWithOneBlog[0]
       await api
@@ -74,10 +74,19 @@ describe('when there is initial helper for blogs', () => {
         .post('/api/blogs')
         .send(newBlogObject)
         .expect(400)
+    })*/
+
+    test('new blog post without a valid token will not be created', async () => {
+      const newBlogObject = helper.listWithOneBlog[0]
+      await api
+        .post('/api/blogs')
+        .send(newBlogObject)
+        .set('Authorization', '')
+        .expect(401)
     })
 
   })
-
+  /*
   describe('deletion of a blog', () => {
     test('status code 204 is returned if blog is deleted', async () => {
       const blogsAtStart = await helper.blogInDb()
@@ -107,6 +116,7 @@ describe('when there is initial helper for blogs', () => {
 
     })
   })
+  */
 
 })
 

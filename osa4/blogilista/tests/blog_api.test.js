@@ -12,7 +12,7 @@ describe('when there is initial helper for blogs', () => {
     await Blog.insertMany(helper.listWithManyBlogs)
   })
 
-  /*
+  
   describe('blogs can be viewed', () => {
 
     test('blogs are returned as json', async () => {
@@ -21,7 +21,7 @@ describe('when there is initial helper for blogs', () => {
         .expect(200)
         .expect('Content-Type', /application\/json/)
     })
-
+/*
     test('there are as many blogs as in the initial list', async () => {
       const response = await api.get('/api/blogs')
 
@@ -34,8 +34,8 @@ describe('when there is initial helper for blogs', () => {
       response.body.forEach((blog) => {
         expect(blog.id).toBeDefined()
       })
-    })
-  })*/
+    })*/
+  })
 
   describe('blogs creation', () => {
     /*

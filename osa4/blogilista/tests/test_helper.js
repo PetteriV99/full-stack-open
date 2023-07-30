@@ -1,5 +1,8 @@
 const Blog = require('../models/blog')
 const User = require('../models/user')
+const supertest = require('supertest')
+const app = require('../app')
+const api = supertest(app)
 
 const listWithOneBlog = [
   {
@@ -63,6 +66,15 @@ const listWithManyBlogs = [
   }
 ]
 
+const getToken = async () => {
+  const login = {
+    "username": "root",
+    "password": "sekret"
+  }
+  const res = await api.post('/api/login').send(login)
+  return res.token
+}
+
 const nonExistingId = async () => {
   const blog = new Blog({ title: 'removethis' })
   await blog.save()
@@ -87,4 +99,5 @@ module.exports = {
   nonExistingId,
   blogInDb,
   usersInDb,
+  getToken
 }

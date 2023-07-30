@@ -5,6 +5,11 @@ const api = supertest(app)
 const Blog = require('../models/blog')
 const helper = require('./test_helper')
 
+let token
+
+beforeAll(async () => {
+  token = await helper.getToken()})
+
 describe('when there is initial helper for blogs', () => {
 
   beforeEach(async () => {
@@ -38,12 +43,13 @@ describe('when there is initial helper for blogs', () => {
   })
 
   describe('blogs creation', () => {
-    /*
+    
     test('new blogs can be added with a POST request', async () => {
       const newBlogObject = helper.listWithOneBlog[0]
       await api
         .post('/api/blogs')
         .send(newBlogObject)
+        .set('Authorization', 'Bearer ' + token)
         .expect(201)
         .expect('Content-Type', /application\/json/)
       const response = await api.get('/api/blogs')
@@ -52,7 +58,7 @@ describe('when there is initial helper for blogs', () => {
       expect(response.body).toHaveLength(helper.listWithManyBlogs.length + 1)
       expect(contents).toContain(helper.listWithOneBlog[0].title)
     })
-
+    /*
     test('new blog post without likes defined will be returned with likes property', async () => {
       const newBlogObject = helper.listWithOneBlog[0]
       newBlogObject.likes = undefined

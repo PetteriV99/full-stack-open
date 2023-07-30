@@ -72,7 +72,7 @@ const getToken = async () => {
     "password": "sekret"
   }
   const res = await api.post('/api/login').send(login)
-  return res.token
+  return res.body.token.toString()
 }
 
 const nonExistingId = async () => {
@@ -91,7 +91,6 @@ const usersInDb = async () => {
   const users = await User.find({})
   return users.map(u => u.toJSON())
 }
-
 
 module.exports = {
   listWithOneBlog,

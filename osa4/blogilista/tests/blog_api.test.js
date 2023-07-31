@@ -8,7 +8,8 @@ const helper = require('./test_helper')
 let token
 
 beforeAll(async () => {
-  token = await helper.getToken()})
+  token = await helper.getToken()
+})
 
 describe('when there is initial helper for blogs', () => {
 
@@ -98,35 +99,56 @@ describe('when there is initial helper for blogs', () => {
   describe('deletion of a blog', () => {
     test('status code 204 is returned if blog is deleted', async () => {
       const blogsAtStart = await helper.blogInDb()
-      const blogObject = blogsAtStart[0]
+      const newBlogObject = helper.listWithManyBlogs[0]
+      const response = await api
+        .post('/api/blogs')
+        .send(newBlogObject)
+        .set('Authorization', 'Bearer ' + token)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
 
-      await api.delete(`/api/blogs/${blogObject.id}`)
+      await api.delete(`/api/blogs/${response.body.id}`)
         .set('Authorization', 'Bearer ' + token)
         .expect(204)
       const blogsAtEnd = await helper.blogInDb()
 
-      expect(blogsAtEnd).toHaveLength(helper.listWithManyBlogs.length - 1)
+      expect(blogsAtEnd).toHaveLength(blogsAtStart.length)
+
+    })
+    test('status code 401 if blog is not created by user', async () => {
+      const blogsAtStart = await helper.blogInDb()
+      const blogObject = blogsAtStart[0]
+
+      await api.delete(`/api/blogs/${blogObject.id}`)
+        .set('Authorization', 'Bearer ' + token)
+        .expect(401)
+      const blogsAtEnd = await helper.blogInDb()
+
+      expect(blogsAtEnd).toHaveLength(helper.listWithManyBlogs.length)
       const titles = blogsAtEnd.map(r => r.title)
-      expect(titles).not.toContain(blogObject.title)
+      expect(titles).toContain(blogObject.title)
 
     })
   })
 
   describe('updating a blog', () => {
     test('status code 200 and result json is returned if blog is updated', async () => {
-      const blogsAtStart = await helper.blogInDb()
-      const blogObject = blogsAtStart[0]
-      blogObject.likes = 14
+      const newBlogObject = helper.listWithManyBlogs[0]
+      const newBlogPost = await api
+        .post('/api/blogs')
+        .send(newBlogObject)
+        .set('Authorization', 'Bearer ' + token)
+        .expect(201)
+        .expect('Content-Type', /application\/json/)
+      newBlogObject.likes = 14
 
-      const result = await api.put(`/api/blogs/${blogObject.id}`)
-        .send(blogObject)
+      const result = await api.put(`/api/blogs/${newBlogPost.body.id}`)
+        .send(newBlogObject)
         .set('Authorization', 'Bearer ' + token)
         .expect(200)
         .expect('Content-Type', /application\/json/)
-      const blogsAtEnd = await helper.blogInDb()
-
-      expect(result.body.likes).toBe(blogObject.likes)
-      expect(blogsAtEnd).toHaveLength(helper.listWithManyBlogs.length)
+        
+      expect(result.body.likes).toBe(newBlogObject.likes)
 
     })
   })

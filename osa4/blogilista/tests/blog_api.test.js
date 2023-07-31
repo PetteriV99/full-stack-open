@@ -17,7 +17,7 @@ describe('when there is initial helper for blogs', () => {
     await Blog.insertMany(helper.listWithManyBlogs)
   })
 
-  
+
   describe('blogs can be viewed', () => {
 
     test('blogs are returned as json', async () => {
@@ -43,7 +43,7 @@ describe('when there is initial helper for blogs', () => {
   })
 
   describe('blogs creation', () => {
-    
+
     test('new blogs can be added with a POST request', async () => {
       const newBlogObject = helper.listWithOneBlog[0]
       await api
@@ -58,13 +58,14 @@ describe('when there is initial helper for blogs', () => {
       expect(response.body).toHaveLength(helper.listWithManyBlogs.length + 1)
       expect(contents).toContain(helper.listWithOneBlog[0].title)
     })
-    /*
+
     test('new blog post without likes defined will be returned with likes property', async () => {
       const newBlogObject = helper.listWithOneBlog[0]
       newBlogObject.likes = undefined
       const result = await api
         .post('/api/blogs')
         .send(newBlogObject)
+        .set('Authorization', 'Bearer ' + token)
         .expect(201)
         .expect('Content-Type', /application\/json/)
 
@@ -79,8 +80,9 @@ describe('when there is initial helper for blogs', () => {
       await api
         .post('/api/blogs')
         .send(newBlogObject)
+        .set('Authorization', 'Bearer ' + token)
         .expect(400)
-    })*/
+    })
 
     test('new blog post without a valid token will not be created', async () => {
       const newBlogObject = helper.listWithOneBlog[0]
@@ -92,13 +94,15 @@ describe('when there is initial helper for blogs', () => {
     })
 
   })
-  /*
+
   describe('deletion of a blog', () => {
     test('status code 204 is returned if blog is deleted', async () => {
       const blogsAtStart = await helper.blogInDb()
       const blogObject = blogsAtStart[0]
 
-      await api.delete(`/api/blogs/${blogObject.id}`).expect(204)
+      await api.delete(`/api/blogs/${blogObject.id}`)
+        .set('Authorization', 'Bearer ' + token)
+        .expect(204)
       const blogsAtEnd = await helper.blogInDb()
 
       expect(blogsAtEnd).toHaveLength(helper.listWithManyBlogs.length - 1)
@@ -114,7 +118,11 @@ describe('when there is initial helper for blogs', () => {
       const blogObject = blogsAtStart[0]
       blogObject.likes = 14
 
-      const result = await api.put(`/api/blogs/${blogObject.id}`).send(blogObject).expect(200).expect('Content-Type', /application\/json/)
+      const result = await api.put(`/api/blogs/${blogObject.id}`)
+        .send(blogObject)
+        .set('Authorization', 'Bearer ' + token)
+        .expect(200)
+        .expect('Content-Type', /application\/json/)
       const blogsAtEnd = await helper.blogInDb()
 
       expect(result.body.likes).toBe(blogObject.likes)
@@ -122,7 +130,7 @@ describe('when there is initial helper for blogs', () => {
 
     })
   })
-  */
+
 
 })
 

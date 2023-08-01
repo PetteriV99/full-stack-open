@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react'
-import Blog from './components/Blog'
-import Notification from './components/Notification'
 import blogService from './services/blogs'
 import loginService from './services/login'
+
+import Blog from './components/Blog'
+import Notification from './components/Notification'
+import LoginForm from './components/Login'
+import NewBlogForm from './components/NewBlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
@@ -60,30 +63,6 @@ const App = () => {
     <button onClick={handleLogout}>Logout</button>
   )
 
-  const loginForm = () => (
-    <form onSubmit={handleLogin}>
-      <div>
-        username
-        <input
-          type="text"
-          value={username}
-          name="Username"
-          onChange={({ target }) => setUsername(target.value)}
-        />
-      </div>
-      <div>
-        password
-        <input
-          type="password"
-          value={password}
-          name="Password"
-          onChange={({ target }) => setPassword(target.value)}
-        />
-      </div>
-      <button type="submit">login</button>
-    </form>
-  )
-
   const addBlog = async (event) => {
     event.preventDefault()
     
@@ -101,45 +80,12 @@ const App = () => {
     }
   }
 
-  const newBlogForm = () => (
-    <form onSubmit={addBlog}>
-    <div>
-      title:
-      <input
-        type="text"
-        value={newTitle}
-        name="Title"
-        onChange={({ target }) => setNewTitle(target.value)}
-      />
-    </div>
-    <div>
-      author:
-      <input
-        type="text"
-        value={newAuthor}
-        name="Author"
-        onChange={({ target }) => setNewAuthor(target.value)}
-      />
-    </div>
-    <div>
-      url:
-      <input
-        type="text"
-        value={newUrl}
-        name="Url"
-        onChange={({ target }) => setNewUrl(target.value)}
-      />
-    </div>
-    <button type="submit">create</button>
-  </form>
-  )
-
   if (user === null) {
     return (
       <div>
         <h2>Log in to application</h2>
         <Notification type={'error'} message={errorMessage} />
-        {loginForm()}
+        {LoginForm({handleLogin, username, password, setUsername, setPassword})}
       </div>
     )
   }
@@ -151,7 +97,7 @@ const App = () => {
       <h2>create new blog</h2>
       <Notification type={'error'} message={errorMessage} />
       <Notification type={'success'} message={successMessage} />
-      {newBlogForm()}
+      {NewBlogForm({addBlog, newTitle, setNewTitle, newAuthor, setNewAuthor, newUrl, setNewUrl})}
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}

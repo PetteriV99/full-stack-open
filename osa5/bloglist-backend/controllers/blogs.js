@@ -22,7 +22,9 @@ blogsRouter.post('/', middleware.userExtractor, async (request, response) => {
   const user = request.user
 
   if (!body.title || !body.url) {
-    return response.status(400).end()
+    return response.status(400).json({
+      error: 'missing title or url'
+    })
   }
 
   const blog = new Blog({

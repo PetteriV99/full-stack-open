@@ -22,7 +22,7 @@ blogsRouter.post('/', middleware.userExtractor, async (request, response) => {
   const user = request.user
 
   if (!body.title || !body.url) {
-    response.status(400).end()
+    return response.status(400).end()
   }
 
   const blog = new Blog({
@@ -44,7 +44,7 @@ blogsRouter.delete('/:id', middleware.userExtractor, async (request, response) =
   const user = request.user
   const blog = await Blog.findById(request.params.id)
   if (!blog) {
-    response.status(404).end()
+    return response.status(404).end()
   }
 
   if ( blog.user.toString() === user._id.toString() ) {

@@ -9,9 +9,6 @@ import NewBlogForm from './components/NewBlogForm'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
-  const [newTitle, setNewTitle] = useState('')
-  const [newAuthor, setNewAuthor] = useState('')
-  const [newUrl, setNewUrl] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
   const [username, setUsername] = useState('')
@@ -63,15 +60,14 @@ const App = () => {
     <button onClick={handleLogout}>Logout</button>
   )
 
-  const addBlog = async (event) => {
-    event.preventDefault()
-    
+  const createBlog = async ({newTitle, newAuthor, newUrl}) => {
     try {
-      await blogService.create({'title': newTitle, 'author': newAuthor, 'url': newUrl})
+      await blogService
+      .create({'title': newTitle, 'author': newAuthor, 'url': newUrl})
+      .then(returnedObject => {
+        setBlogs(blogs.concat(returnedObject))
+      })
       setSuccessMessage(`a new blog ${newTitle} by ${newAuthor ? newAuthor : 'unknown author'} was added`)
-      setNewTitle('')
-      setNewAuthor('')
-      setNewUrl('')
     } catch (error) {
       setErrorMessage('title or url is empty')
       setTimeout(() => {
@@ -97,7 +93,7 @@ const App = () => {
       <h2>create new blog</h2>
       <Notification type={'error'} message={errorMessage} />
       <Notification type={'success'} message={successMessage} />
-      {NewBlogForm({addBlog, newTitle, setNewTitle, newAuthor, setNewAuthor, newUrl, setNewUrl})}
+      <NewBlogForm createBlog={createBlog} />
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}

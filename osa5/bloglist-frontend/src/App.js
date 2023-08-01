@@ -6,6 +6,9 @@ import loginService from './services/login'
 
 const App = () => {
   const [blogs, setBlogs] = useState([])
+  const [newTitle, setNewTitle] = useState('')
+  const [newAuthor, setNewAuthor] = useState('')
+  const [newUrl, setNewUrl] = useState('')
   const [errorMessage, setErrorMessage] = useState(null)
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -80,6 +83,55 @@ const App = () => {
     </form>
   )
 
+  const addBlog = async (event) => {
+    event.preventDefault()
+    
+    try {
+      await blogService.create({'title': newTitle, 'author': newAuthor, 'url': newUrl})
+      setNewTitle('')
+      setNewAuthor('')
+      setNewUrl('')
+    } catch (error) {
+      setErrorMessage('title or url is empty')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
+  const newBlogForm = () => (
+    <form onSubmit={addBlog}>
+    <div>
+      title:
+      <input
+        type="text"
+        value={newTitle}
+        name="Title"
+        onChange={({ target }) => setNewTitle(target.value)}
+      />
+    </div>
+    <div>
+      author:
+      <input
+        type="text"
+        value={newAuthor}
+        name="Author"
+        onChange={({ target }) => setNewAuthor(target.value)}
+      />
+    </div>
+    <div>
+      url:
+      <input
+        type="text"
+        value={newUrl}
+        name="Url"
+        onChange={({ target }) => setNewUrl(target.value)}
+      />
+    </div>
+    <button type="submit">create</button>
+  </form>
+  )
+
   if (user === null) {
     return (
       <div>
@@ -94,6 +146,9 @@ const App = () => {
     <div>
       <h2>blogs</h2>
       <p>{user.name} logged in {logOut()}</p>
+      <h2>create new blog</h2>
+      <Notification message={errorMessage} />
+      {newBlogForm()}
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} />
       )}

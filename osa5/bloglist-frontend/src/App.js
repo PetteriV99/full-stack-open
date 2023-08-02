@@ -12,8 +12,6 @@ const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [successMessage, setSuccessMessage] = useState(null)
   const [blogFormVisible, setBlogFormVisible] = useState(false)
-  const [username, setUsername] = useState('')
-  const [password, setPassword] = useState('')
   const [user, setUser] = useState(null)
 
   const hideWhenVisible = { display: blogFormVisible ? 'none' : '' }
@@ -34,8 +32,7 @@ const App = () => {
     }
   }, [])
 
-  const handleLogin = async (event) => {
-    event.preventDefault()
+  const handleLogin = async ({username, password}) => {
 
     try {
       const user = await loginService.login({
@@ -45,8 +42,6 @@ const App = () => {
       window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
       blogService.setToken(user.token)
       setUser(user)
-      setUsername('')
-      setPassword('')
     } catch (error) {
       setErrorMessage('wrong credentials')
       setTimeout(() => {
@@ -87,7 +82,7 @@ const App = () => {
       <div>
         <h2>Log in to application</h2>
         <Notification type={'error'} message={errorMessage} />
-        {LoginForm({ handleLogin, username, password, setUsername, setPassword })}
+        <LoginForm handleLogin={handleLogin} />
       </div>
     )
   }

@@ -65,6 +65,7 @@ const App = () => {
       await blogService
         .create({ 'title': newTitle, 'author': newAuthor, 'url': newUrl })
         .then(returnedObject => {
+          returnedObject.user = user
           setBlogs(blogs.concat(returnedObject))
         })
       setSuccessMessage(`a new blog ${newTitle} by ${newAuthor ? newAuthor : 'unknown author'} was added`)

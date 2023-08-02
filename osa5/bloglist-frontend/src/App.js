@@ -95,7 +95,7 @@ const App = () => {
       <Notification type={'error'} message={errorMessage} />
       <Notification type={'success'} message={successMessage} />
       <div style={hideWhenVisible}>
-          <button onClick={() => setBlogFormVisible(true)}>new blog</button>
+          <button onClick={() => setBlogFormVisible(true)}>create new blog</button>
       </div>
       <div style={showWhenVisible}>
         <NewBlogForm createBlog={createBlog} />

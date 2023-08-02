@@ -62,13 +62,13 @@ const App = () => {
 
   const createBlog = async ({ newTitle, newAuthor, newUrl }) => {
     try {
-      await blogService
-        .create({ 'title': newTitle, 'author': newAuthor, 'url': newUrl })
-        .then(returnedObject => {
-          returnedObject.user = user
-          setBlogs(blogs.concat(returnedObject))
-        })
+      const newBlog = await blogService.create({ 'title': newTitle, 'author': newAuthor, 'url': newUrl })
+      newBlog.user = user
+      setBlogs(blogs.concat(newBlog))
       setSuccessMessage(`a new blog ${newTitle} by ${newAuthor ? newAuthor : 'unknown author'} was added`)
+      setTimeout(() => {
+        setSuccessMessage(null)
+      }, 5000)
       setBlogFormVisible(false)
     } catch (error) {
       setErrorMessage('title or url is empty')

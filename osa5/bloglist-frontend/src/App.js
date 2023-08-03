@@ -78,7 +78,7 @@ const App = () => {
     }
   }
 
-  const handleLike = async({ blog }) => {
+  const handleLike = async ({ blog }) => {
     // Update blogs before the async operation
     const blogToUpdate = { ...blog }
     blogToUpdate.likes = blogToUpdate.likes + 1
@@ -108,6 +108,21 @@ const App = () => {
     }
   }
 
+  const handleRemove = async ({blog}) => {
+
+    try {
+      console.log(blog.id)
+      await blogService.remove(blog.id)
+      setBlogs(blogs.filter((element) => element.id !== blog.id))
+    } catch (error) {
+      setErrorMessage('could not remove blog')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+
+  }
+
   if (user === null) {
     return (
       <div>
@@ -133,7 +148,7 @@ const App = () => {
         <button onClick={() => setBlogFormVisible(false)}>cancel</button>
       </div>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} handleLike={handleLike} />
+        <Blog key={blog.id} blog={blog} handleLike={handleLike} handleRemove={handleRemove} user={user} />
       )}
     </div>
   )

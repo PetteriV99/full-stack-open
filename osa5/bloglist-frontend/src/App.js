@@ -78,6 +78,27 @@ const App = () => {
     }
   }
 
+  const handleLike = async({ blog }) => {
+    try {
+      const blogToUpdate = blog
+      blogToUpdate.likes = blogToUpdate.likes + 1
+      const updatedBlog = await blogService.update(blog.id, blogToUpdate)
+      const updatedBlogsArray = blogs.map((existingBlog) => {
+        if (existingBlog.id === updatedBlog.id) {
+          return updatedBlog;
+        } else {
+          return existingBlog;
+        }
+      });
+      setBlogs(updatedBlogsArray)
+    } catch (error) {
+      setErrorMessage('could not update likes')
+      setTimeout(() => {
+        setErrorMessage(null)
+      }, 5000)
+    }
+  }
+
   if (user === null) {
     return (
       <div>
@@ -103,7 +124,7 @@ const App = () => {
         <button onClick={() => setBlogFormVisible(false)}>cancel</button>
       </div>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} />
+        <Blog key={blog.id} blog={blog} handleLike={handleLike} />
       )}
     </div>
   )

@@ -4,7 +4,7 @@ import loginService from './services/login'
 
 import Blog from './components/Blog'
 import Notification from './components/Notification'
-import LoginForm from './components/Login'
+import LoginForm from './components/LoginForm'
 import NewBlogForm from './components/NewBlogForm'
 
 const App = () => {

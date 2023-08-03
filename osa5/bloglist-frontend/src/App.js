@@ -79,6 +79,7 @@ const App = () => {
   }
 
   const handleLike = async({ blog }) => {
+    // Update blogs before the async operation
     const blogToUpdate = { ...blog }
     blogToUpdate.likes = blogToUpdate.likes + 1
     const updatedBlogsArray = blogs.map((existingBlog) => {
@@ -91,6 +92,7 @@ const App = () => {
     setBlogs(updatedBlogsArray)
     try {
       const updatedBlog = await blogService.update(blog.id, blogToUpdate)
+      // Update blogs with the result 
       setBlogs((prevBlogs) => prevBlogs.map((existingBlog) => {
         if (existingBlog.id === updatedBlog.id) {
           return updatedBlog;

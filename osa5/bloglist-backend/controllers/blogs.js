@@ -73,6 +73,17 @@ blogsRouter.put('/:id', middleware.userExtractor, async (request, response) => {
     const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, newBlog, { new: true })
     response.status(200).json(updatedBlog)
   }
+  else if (newBlog.likes >= oldBlog.likes) {
+    // It is still flawed to trust frontend for the number of likes
+    const likedBlog = {
+      title: oldBlog.title,
+      author: oldBlog.author,
+      url: oldBlog.url,
+      likes: body.likes
+    }
+    const updatedBlog = await Blog.findByIdAndUpdate(request.params.id, likedBlog, { new: true })
+    response.status(200).json(updatedBlog)
+  }
   else {
     response.status(401).json({ error: 'blog not created by user' })
   }

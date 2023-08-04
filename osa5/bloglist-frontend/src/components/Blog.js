@@ -26,7 +26,7 @@ const Blog = ({ blog, user, handleLike, handleRemove }) => {
 
   const remove = (event) => {
     event.preventDefault()
-    handleRemove( {blog} )
+    handleRemove( { blog } )
   }
 
   const userName = blog.user === null ? 'unknown' : blog.user.name

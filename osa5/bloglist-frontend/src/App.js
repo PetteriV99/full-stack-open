@@ -32,7 +32,7 @@ const App = () => {
     }
   }, [])
 
-  const handleLogin = async ({username, password}) => {
+  const handleLogin = async ({ username, password }) => {
 
     try {
       const user = await loginService.login({
@@ -84,22 +84,22 @@ const App = () => {
     blogToUpdate.likes = blogToUpdate.likes + 1
     const updatedBlogsArray = blogs.map((existingBlog) => {
       if (existingBlog.id === blogToUpdate.id) {
-        return blogToUpdate;
+        return blogToUpdate
       } else {
-        return existingBlog;
+        return existingBlog
       }
-    });
+    })
     setBlogs(updatedBlogsArray)
     try {
       const updatedBlog = await blogService.update(blog.id, blogToUpdate)
-      // Update blogs with the result 
+      // Update blogs with the result
       setBlogs((prevBlogs) => prevBlogs.map((existingBlog) => {
         if (existingBlog.id === updatedBlog.id) {
-          return updatedBlog;
+          return updatedBlog
         } else {
-          return existingBlog;
+          return existingBlog
         }
-      }));
+      }))
     } catch (error) {
       setErrorMessage('could not update likes')
       setTimeout(() => {
@@ -108,7 +108,7 @@ const App = () => {
     }
   }
 
-  const handleRemove = async ({blog}) => {
+  const handleRemove = async ({ blog }) => {
 
     try {
       console.log(blog.id)
@@ -141,7 +141,7 @@ const App = () => {
       <Notification type={'error'} message={errorMessage} />
       <Notification type={'success'} message={successMessage} />
       <div style={hideWhenVisible}>
-          <button onClick={() => setBlogFormVisible(true)}>create new blog</button>
+        <button onClick={() => setBlogFormVisible(true)}>create new blog</button>
       </div>
       <div style={showWhenVisible}>
         <NewBlogForm createBlog={createBlog} />

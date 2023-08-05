@@ -91,15 +91,7 @@ const App = () => {
     })
     setBlogs(updatedBlogsArray)
     try {
-      const updatedBlog = await blogService.update(blog.id, blogToUpdate)
-      // Update blogs with the result
-      setBlogs((prevBlogs) => prevBlogs.map((existingBlog) => {
-        if (existingBlog.id === updatedBlog.id) {
-          return updatedBlog
-        } else {
-          return existingBlog
-        }
-      }))
+      await blogService.update(blog.id, blogToUpdate)
     } catch (error) {
       setErrorMessage('could not update likes')
       setTimeout(() => {
@@ -109,18 +101,18 @@ const App = () => {
   }
 
   const handleRemove = async ({ blog }) => {
-
-    try {
-      console.log(blog.id)
-      await blogService.remove(blog.id)
-      setBlogs(blogs.filter((element) => element.id !== blog.id))
-    } catch (error) {
-      setErrorMessage('could not remove blog')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.user.name || 'unknown'}?`)) {
+      try {
+        console.log(blog.id)
+        await blogService.remove(blog.id)
+        setBlogs(blogs.filter((element) => element.id !== blog.id))
+      } catch (error) {
+        setErrorMessage('could not remove blog')
+        setTimeout(() => {
+          setErrorMessage(null)
+        }, 5000)
+      }
     }
-
   }
 
   if (user === null) {

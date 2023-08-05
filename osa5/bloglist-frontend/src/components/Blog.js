@@ -29,9 +29,10 @@ const Blog = ({ blog, user, handleLike, handleRemove }) => {
     handleRemove( { blog } )
   }
 
-  const userName = blog.user === null ? 'unknown' : blog.user.name
-  const userId = user === null ? '' : user.id
-  const blogUserId = blog.user === null ? '' : blog.user.id
+
+  // There isn't a way to check the id of the current user unless I modify the backend
+  const blogUserName = blog.user === null ? 'unknown' : blog.user.name
+  const userName = user === null ? '' : user.name
 
   return (
     <div style={blogStyle}>
@@ -43,9 +44,9 @@ const Blog = ({ blog, user, handleLike, handleRemove }) => {
         <br/>
         likes {blog.likes} <button onClick={like}>like</button>
         <br/>
-        created by {userName}
+        created by {blogUserName}
         <br/>
-        {userId === blogUserId ? <button onClick={remove}>remove</button> : <></>}
+        {userName=== blogUserName ? <button onClick={remove}>remove</button> : <></>}
       </div>
     </div>
   )

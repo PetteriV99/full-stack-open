@@ -31,11 +31,11 @@ const Blog = ({ blog, user, handleLike, handleRemove }) => {
 
 
   // There isn't a way to check the id of the current user unless I modify the backend
-  const blogUserName = blog.user === null ? 'unknown' : blog.user.name
+  const blogUserName = blog.user === null ? blog.user.name : 'unknown'
   const userName = user === null ? '' : user.name
 
   return (
-    <div style={blogStyle}>
+    <div style={blogStyle} className='blog'>
       {blog.title} by {blog.author}
       <button onClick={toggleVisibility} style={hideWhenVisible}>show</button>
       <button onClick={toggleVisibility} style={showWhenVisible}>hide</button>

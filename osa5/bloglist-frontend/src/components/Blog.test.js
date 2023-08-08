@@ -1,6 +1,6 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import { render, screen } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import Blog from './Blog'
 
 test('renders content', () => {
@@ -11,8 +11,24 @@ test('renders content', () => {
     likes: 7,
   }
 
-  render(<Blog blog={blog} />)
+  const user = {
+    username: 'wrawrawrfas',
+    name: 'awewaeaw',
+    token: 'awrwarfawrfawrwarfszfcvz'
+  }
 
-  const element = screen.getByText('Component testing is done with react-testing-library')
-  expect(element).toBeDefined()
+  const handleLike = async ({ blog }) => {
+    console.log(blog)
+  }
+
+  const handleRemove = async ({ blog }) => {
+    console.log(blog)
+  }
+
+  const { container } = render(<Blog blog={blog} handleLike={handleLike} handleRemove={handleRemove} user={user} />)
+
+  const div = container.querySelector('.blog')
+  expect(div).toHaveTextContent(
+    'React patterns'
+  )
 })

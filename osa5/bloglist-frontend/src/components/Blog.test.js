@@ -1,9 +1,12 @@
 import React from 'react'
 import '@testing-library/jest-dom/extend-expect'
-import { render } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
 
-test('renders content', () => {
+describe('rendering Blog', () => {
+
+  let container
   const blog = {
     title: 'React patterns',
     author: 'Michael Chan',
@@ -25,10 +28,30 @@ test('renders content', () => {
     console.log(blog)
   }
 
-  const { container } = render(<Blog blog={blog} handleLike={handleLike} handleRemove={handleRemove} user={user} />)
+  beforeEach(() => {
+    container = render(<Blog blog={blog} handleLike={handleLike} handleRemove={handleRemove} user={user} />).container
+  })
 
-  const div = container.querySelector('.blog')
-  expect(div).toHaveTextContent(
-    'React patterns'
-  )
+  test('title is rendered', () => {
+
+    const div = container.querySelector('.blog')
+    expect(div).toHaveTextContent(
+      'React patterns'
+    )
+  })
+
+  test('at start the children are not displayed', () => {
+    const div = container.querySelector('.togglableContent')
+    expect(div).toHaveStyle('display: none')
+  })
+
+  test('after clicking the button, children are displayed', async () => {
+    const userScreen = userEvent.setup()
+    const button = screen.getByText('show')
+    await userScreen.click(button)
+
+    const div = container.querySelector('.togglableContent')
+    expect(div).not.toHaveStyle('display: none')
+  })
+
 })

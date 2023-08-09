@@ -54,4 +54,15 @@ describe('rendering Blog', () => {
     expect(div).not.toHaveStyle('display: none')
   })
 
+  test('clicking the button calls event handler once', async () => {
+
+    const mockHandler = jest.fn()
+
+    const user = userEvent.setup()
+    const button = screen.getByText('like')
+    await user.click(button)
+
+    expect(mockHandler.mock.calls).toHaveLength(1)
+  })
+
 })

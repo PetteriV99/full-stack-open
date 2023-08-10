@@ -1,7 +1,7 @@
 {
     "name": "blogilista",
     "version": "1.0.0",
-    "description": "Repository for part 4 of Full Stack Open",
+    "description": "Repository for part 5 of Full Stack Open",
     "main": "index.js",
     "scripts": {
         "start": "cross-env NODE_ENV=production node index.js",
@@ -9,7 +9,8 @@
         "test": "cross-env NODE_ENV=test jest --verbose --runInBand",
         "lint": "eslint .",
         "build:ui": "rm -rf build && cd ./frontend && npm ci && npm run build && cp -r build ../build",
-        "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push"
+        "deploy:full": "npm run build:ui && git add . && git commit -m uibuild && git push",
+        "start:test": "NODE_ENV=test node index.js"
     },
     "author": "Petteri Vänttinen (PetteriV99)",
     "license": "ISC",

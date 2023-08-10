@@ -12,6 +12,7 @@ describe('rendering Blog', () => {
     author: 'Michael Chan',
     url: 'https://reactpatterns.com/',
     likes: 7,
+    user: null
   }
 
   const user = {
@@ -28,11 +29,8 @@ describe('rendering Blog', () => {
     console.log(blog)
   }
 
-  beforeEach(() => {
-    container = render(<Blog blog={blog} handleLike={handleLike} handleRemove={handleRemove} user={user} />).container
-  })
-
   test('title is rendered', () => {
+    container = render(<Blog blog={blog} handleLike={handleLike} handleRemove={handleRemove} ownedByUser={user?.name === blog?.user?.name ? true : false} />).container
 
     const div = container.querySelector('.blog')
     expect(div).toHaveTextContent(
@@ -41,11 +39,15 @@ describe('rendering Blog', () => {
   })
 
   test('at start the children are not displayed', () => {
+    container = render(<Blog blog={blog} handleLike={handleLike} handleRemove={handleRemove} ownedByUser={user?.name === blog?.user?.name ? true : false} />).container
+
     const div = container.querySelector('.togglableContent')
     expect(div).toHaveStyle('display: none')
   })
 
   test('after clicking the button, children are displayed', async () => {
+    container = render(<Blog blog={blog} handleLike={handleLike} handleRemove={handleRemove} ownedByUser={user?.name === blog?.user?.name ? true : false} />).container
+
     const userScreen = userEvent.setup()
     const button = screen.getByText('show')
     await userScreen.click(button)
@@ -57,12 +59,16 @@ describe('rendering Blog', () => {
   test('clicking the button calls event handler once', async () => {
 
     const mockHandler = jest.fn()
+    render(<Blog blog={blog} handleLike={mockHandler} handleRemove={handleRemove} ownedByUser={user?.name === blog?.user?.name ? true : false} />)
 
-    const user = userEvent.setup()
-    const button = screen.getByText('like')
-    await user.click(button)
+    const userForEvent = userEvent.setup()
+    const button = screen.getByText('show')
+    await userForEvent .click(button)
+    const likeButton = screen.getByText('like')
+    await userForEvent.click(likeButton)
+    await userForEvent.click(likeButton)
 
-    expect(mockHandler.mock.calls).toHaveLength(1)
+    expect(mockHandler.mock.calls).toHaveLength(2)
   })
 
 })

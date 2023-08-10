@@ -3,6 +3,7 @@ import '@testing-library/jest-dom/extend-expect'
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Blog from './Blog'
+import NewBlogForm from './NewBlogForm'
 
 describe('rendering Blog', () => {
 
@@ -63,12 +64,28 @@ describe('rendering Blog', () => {
 
     const userForEvent = userEvent.setup()
     const button = screen.getByText('show')
-    await userForEvent .click(button)
+    await userForEvent.click(button)
     const likeButton = screen.getByText('like')
     await userForEvent.click(likeButton)
     await userForEvent.click(likeButton)
 
     expect(mockHandler.mock.calls).toHaveLength(2)
+  })
+
+  test('BlogForm calls onSubmit', async () => {
+    const userForEvent = userEvent.setup()
+    const createBlog = jest.fn()
+
+    render(<NewBlogForm createBlog={createBlog} />)
+
+    const input = screen.getByRole('textbox')
+    const sendButton = screen.getByText('save')
+
+    await userForEvent.type(input, 'testing a form...')
+    await userForEvent.click(sendButton)
+
+    expect(createBlog.mock.calls).toHaveLength(1)
+    expect(createBlog.mock.calls[0][0].content).toBe('testing a form...')
   })
 
 })

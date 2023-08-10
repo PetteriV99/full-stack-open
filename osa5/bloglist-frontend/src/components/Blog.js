@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 
-const Blog = ({ blog, user, handleLike, handleRemove }) => {
+const Blog = ({ blog, ownedByUser, handleLike, handleRemove }) => {
   const [visible, setVisible] = useState(false)
 
   const hideWhenVisible = { display: visible ? 'none' : '' }
@@ -31,8 +31,7 @@ const Blog = ({ blog, user, handleLike, handleRemove }) => {
 
 
   // There isn't a way to check the id of the current user unless I modify the backend
-  const blogUserName = blog.user === null ? blog.user.name : 'unknown'
-  const userName = user === null ? '' : user.name
+  const blogUserName = blog.user === null ? 'unknown' : blog.user.name
 
   return (
     <div style={blogStyle} className='blog'>
@@ -46,7 +45,7 @@ const Blog = ({ blog, user, handleLike, handleRemove }) => {
         <br/>
         created by {blogUserName}
         <br/>
-        {userName=== blogUserName ? <button onClick={remove}>remove</button> : <></>}
+        {ownedByUser ? <button onClick={remove}>remove</button> : <></>}
       </div>
     </div>
   )
@@ -54,7 +53,7 @@ const Blog = ({ blog, user, handleLike, handleRemove }) => {
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  user: PropTypes.object.isRequired,
+  ownedByUser: PropTypes.bool.isRequired,
   handleLike: PropTypes.func.isRequired,
   handleRemove: PropTypes.func.isRequired
 }

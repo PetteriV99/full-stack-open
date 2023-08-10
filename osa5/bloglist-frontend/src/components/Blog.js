@@ -31,7 +31,7 @@ const Blog = ({ blog, ownedByUser, handleLike, handleRemove }) => {
 
 
   // There isn't a way to check the id of the current user unless I modify the backend
-  const blogUserName = blog.user === null ? 'unknown' : blog.user.name
+  const blogUserName = blog.user === null ? 'unknown' : blog.user?.name
 
   return (
     <div style={blogStyle} className='blog'>

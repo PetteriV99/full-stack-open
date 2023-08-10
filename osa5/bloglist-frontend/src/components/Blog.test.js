@@ -78,14 +78,16 @@ describe('rendering Blog', () => {
 
     render(<NewBlogForm createBlog={createBlog} />)
 
-    const input = screen.getByRole('textbox')
-    const sendButton = screen.getByText('save')
+    const inputs = screen.getAllByRole('textbox')
+    const sendButton = screen.getByText('create')
 
-    await userForEvent.type(input, 'testing a form...')
+    await userForEvent.type(inputs[0], 'my cool title')
+    await userForEvent.type(inputs[2], 'google.fi')
     await userForEvent.click(sendButton)
-
     expect(createBlog.mock.calls).toHaveLength(1)
-    expect(createBlog.mock.calls[0][0].content).toBe('testing a form...')
+    expect(createBlog.mock.calls[0][0].newTitle).toBe('my cool title')
+    expect(createBlog.mock.calls[0][0].newAuthor).toBe('')
+    expect(createBlog.mock.calls[0][0].newUrl).toBe('google.fi')
   })
 
 })

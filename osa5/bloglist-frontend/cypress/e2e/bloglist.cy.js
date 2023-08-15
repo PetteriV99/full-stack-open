@@ -62,6 +62,16 @@ describe('Blog app', function () {
           .contains('like')
           .click()
       })
+
+      it('it can be removed', function () {
+        cy.contains('Neon Genesis Evangelion')
+          .contains('show')
+          .click()
+
+        cy.contains('nge.fi')
+          .contains('remove')
+          .click()
+      })
     })
 
     // ...

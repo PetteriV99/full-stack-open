@@ -39,7 +39,12 @@ describe('Blog app', function () {
     })
 
     it('a new blog can be created', function () {
-      // ...
+      cy.get('#showNewBlogForm').click()
+      cy.get('#title').type('a new blog title')
+      cy.get('#author').type('blog author')
+      cy.get('#url').type('whatever.com')
+      cy.get('#createBlog').click()
+      cy.contains('a new blog title')
     })
 
     // ...

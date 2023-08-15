@@ -133,11 +133,11 @@ const App = () => {
       <Notification type={'error'} message={errorMessage} />
       <Notification type={'success'} message={successMessage} />
       <div style={hideWhenVisible}>
-        <button onClick={() => setBlogFormVisible(true)}>create new blog</button>
+        <button id='showNewBlogForm' onClick={() => setBlogFormVisible(true)}>create new blog</button>
       </div>
       <div style={showWhenVisible}>
         <NewBlogForm createBlog={createBlog} />
-        <button onClick={() => setBlogFormVisible(false)}>cancel</button>
+        <button id='hideNewBlogForm' onClick={() => setBlogFormVisible(false)}>cancel</button>
       </div>
       {blogs.map(blog =>
         <Blog key={blog.id} blog={blog} handleLike={handleLike} handleRemove={handleRemove} ownedByUser={user?.name === blog?.user?.name ? true : false} />

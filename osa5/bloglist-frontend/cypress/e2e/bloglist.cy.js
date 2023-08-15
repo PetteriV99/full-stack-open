@@ -47,6 +47,23 @@ describe('Blog app', function () {
       cy.contains('a new blog title')
     })
 
+    describe('and a blog exists', function () {
+      beforeEach(function () {
+        cy.createBlog({ title: 'My Pony', author: 'Brony', url: 'google.fi' })
+        cy.createBlog({ title: 'Neon Genesis Evangelion', author: 'Shinji', url: 'nge.fi' })
+      })
+
+      it('it can be liked', function () {
+        cy.contains('Neon Genesis Evangelion')
+          .contains('show')
+          .click()
+
+        cy.contains('nge.fi')
+          .contains('like')
+          .click()
+      })
+    })
+
     // ...
   })
 })

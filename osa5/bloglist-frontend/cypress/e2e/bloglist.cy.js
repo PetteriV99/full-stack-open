@@ -1,13 +1,19 @@
 describe('Blog app', function () {
   beforeEach(function () {
-    cy.request('POST', 'http://localhost:3001/api/testing/reset')
-    const user = {
+    cy.visit('')
+    cy.request('POST', `${Cypress.env('BACKEND')}/testing/reset`)
+    const user_1 = {
       name: 'Matti Luukkainen',
       username: 'mluukkai',
       password: 'salainen'
     }
-    cy.request('POST', 'http://localhost:3001/api/users/', user)
-    cy.visit('http://localhost:3000')
+    const user_2 = {
+      name: 'Luukas Mattilainen',
+      username: 'luuksm',
+      password: 'salainen'
+    }
+    cy.request('POST', `${Cypress.env('BACKEND')}/users`, user_1)
+    cy.request('POST', `${Cypress.env('BACKEND')}/users`, user_2)
   })
 
   it('Login form is shown', function () {
@@ -72,8 +78,16 @@ describe('Blog app', function () {
           .contains('remove')
           .click()
       })
-    })
 
+      it('only the user that added the blog can see the remove button', function () {
+        cy.get('#logout').click()
+        cy.login({ username: 'luuksm', password: 'salainen' })
+        cy.contains('Neon Genesis Evangelion')
+          .contains('show')
+          .click()
+        cy.contains('Neon Genesis Evangelion').should('not.contain', 'remove')
+      })
+    })
     // ...
   })
 })

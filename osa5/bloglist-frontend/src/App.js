@@ -57,7 +57,7 @@ const App = () => {
   }
 
   const logOut = () => (
-    <button onClick={handleLogout}>Logout</button>
+    <button id='logout' onClick={handleLogout}>Logout</button>
   )
 
   const createBlog = async ({ newTitle, newAuthor, newUrl }) => {

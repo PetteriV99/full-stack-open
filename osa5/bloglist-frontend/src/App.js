@@ -79,19 +79,15 @@ const App = () => {
   }
 
   const handleLike = async ({ blog }) => {
-    // Update blogs before the async operation
-    const blogToUpdate = { ...blog }
-    blogToUpdate.likes = blogToUpdate.likes + 1
-    const updatedBlogsArray = blogs.map((existingBlog) => {
-      if (existingBlog.id === blogToUpdate.id) {
-        return blogToUpdate
-      } else {
-        return existingBlog
-      }
-    })
-    setBlogs(updatedBlogsArray)
     try {
-      await blogService.update(blog.id, blogToUpdate)
+      const updatedBlog = { ...blog, likes: blog.likes + 1 }
+      await blogService.update(blog.id, updatedBlog)
+
+      const updatedBlogsArray = blogs
+        .map(existingBlog => (existingBlog.id === blog.id ? updatedBlog : existingBlog))
+        .sort((a, b) => b.likes - a.likes)
+
+      setBlogs(updatedBlogsArray)
     } catch (error) {
       setErrorMessage('could not update likes')
       setTimeout(() => {

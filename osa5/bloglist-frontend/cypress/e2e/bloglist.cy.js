@@ -57,6 +57,7 @@ describe('Blog app', function () {
       beforeEach(function () {
         cy.createBlog({ title: 'My Pony', author: 'Brony', url: 'google.fi' })
         cy.createBlog({ title: 'Neon Genesis Evangelion', author: 'Shinji', url: 'nge.fi' })
+        cy.createBlog({ title: 'What a nice title', author: 'Me', url: 'wararwar.com' })
       })
 
       it('it can be liked', function () {
@@ -87,6 +88,13 @@ describe('Blog app', function () {
           .click()
         cy.contains('Neon Genesis Evangelion').should('not.contain', 'remove')
       })
+
+      it('blogs are sorted by most likes', function () {
+        cy.contains('Neon Genesis Evangelion')
+          .contains('show')
+          .click()
+      })
+
     })
     // ...
   })

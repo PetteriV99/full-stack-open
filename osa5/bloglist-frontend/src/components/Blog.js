@@ -19,13 +19,11 @@ const Blog = ({ blog, ownedByUser, handleLike, handleRemove }) => {
     setVisible(!visible)
   }
 
-  const like = (event) => {
-    event.preventDefault()
+  const like = () => {
     handleLike({ blog })
   }
 
-  const remove = (event) => {
-    event.preventDefault()
+  const remove = () => {
     handleRemove( { blog } )
   }
 

@@ -93,6 +93,9 @@ describe('Blog app', function () {
         cy.contains('Neon Genesis Evangelion')
           .contains('show')
           .click()
+
+        cy.contains('Neon Genesis Evangelion')
+          ._.times(10, () => cy.get('#like').click())
       })
 
     })

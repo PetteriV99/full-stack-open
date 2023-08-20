@@ -1,4 +1,8 @@
 import { useState } from 'react'
+import { createStore } from 'redux'
+import reducer from './reducer'
+
+const store = createStore(reducer)
 
 const Button = (props) => (
   <button onClick={props.handleClick}>
@@ -55,9 +59,3 @@ const App = () => {
 }
 
 export default App
-
-/*
-<StatisticLine  text='All' value={all}></StatisticLine >
-<StatisticLine  text='Average' value={values / all}></StatisticLine >
-<StatisticLine  text='Positive' value={good / all * 100 + ' %'}></StatisticLine >
-*/

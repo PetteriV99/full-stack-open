@@ -90,9 +90,12 @@ describe('Blog app', function () {
       })
 
       it('blogs are sorted by most likes', function () {
-        cy.get('.blog')
-          .should('contain', 'Neon Genesis Evangelion')
-          .get('#showBlogDetails')
+        cy.contains('Neon Genesis Evangelion')
+          .contains('show')
+          .click()
+
+        cy.contains('My Pony')
+          .contains('show')
           .click()
 
         cy.contains('nge.fi')
@@ -103,12 +106,14 @@ describe('Blog app', function () {
           .contains('like')
           .click()
 
-        cy.contains('nge.fi')
+        cy.contains('google.fi')
           .contains('like')
           .click()
+
+        cy.get('.blog').eq(0).should('contain', 'Neon Genesis Evangelion')
+        cy.get('.blog').eq(1).should('contain', 'My Pony')
       })
 
     })
-    // ...
   })
 })

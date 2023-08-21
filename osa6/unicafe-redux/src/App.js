@@ -1,19 +1,21 @@
-import { createStore } from 'redux'
-import counterReducer from './reducer'
 import Button from './components/Button'
 import Statistics from './components/Statistics'
 
-const store = createStore(counterReducer)
+const App = ({ store }) => {
 
-const App = () => {
+  const good = () => store.dispatch({ type: 'GOOD' })
+  const ok = () => store.dispatch({ type: 'OK' })
+  const bad = () => store.dispatch({ type: 'BAD' })
+  const reset = () => store.dispatch({ type: 'ZERO' })
 
   return (
     <>
       <h1>Give feedback</h1>
       <div>
-        <Button handleClick={() => store.dispatch({ type: 'GOOD' })} text="Good"></Button>
-        <Button handleClick={() => store.dispatch({ type: 'GOOD' })} text="Neutral"></Button>
-        <Button handleClick={() => store.dispatch({ type: 'GOOD' })} text="Bad"></Button>
+        <Button handleClick={good} text="Good"></Button>
+        <Button handleClick={ok} text="Neutral"></Button>
+        <Button handleClick={bad} text="Bad"></Button>
+        <Button handleClick={reset} text="Reset"></Button>
       </div>
       <h1>Stats</h1>
       <Statistics values={store.getState()}></Statistics>

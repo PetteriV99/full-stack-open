@@ -2,7 +2,7 @@ import StatisticLine from './StatisticsLine'
 
 const Statistics = (props) => {
 
-  let all = props.values.good + props.values.neutral + props.values.bad
+  let all = props.values.good + props.values.ok + props.values.bad
   let values = props.values.good + (props.values.bad * -1)
 
   return (
@@ -11,7 +11,7 @@ const Statistics = (props) => {
         <table>
           <tbody>
             <StatisticLine text="Good" value={props.values.good}></StatisticLine >
-            <StatisticLine text="Neutral" value={props.values.neutral}></StatisticLine >
+            <StatisticLine text="Neutral" value={props.values.ok}></StatisticLine >
             <StatisticLine text="Bad" value={props.values.bad}></StatisticLine >
             <StatisticLine text='All' value={all}></StatisticLine >
             <StatisticLine text='Average' value={values / all}></StatisticLine >

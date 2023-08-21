@@ -1,42 +1,10 @@
 import { useState } from 'react'
-import { createStore } from 'redux'
-import reducer from './reducer'
+//import { createStore } from 'redux'
+//import reducer from './reducer'
+import Button from './components/Button'
+import Statistics from './components/Statistics'
 
-const store = createStore(reducer)
-
-const Button = (props) => (
-  <button onClick={props.handleClick}>
-    {props.text}
-  </button>
-)
-
-const StatisticLine = (props) => (
-  <tr><td>{props.text} {props.value}</td></tr>
-)
-
-const Statistics = (props) => {
-
-  let all = props.values.good + props.values.neutral + props.values.bad
-  let values = props.values.good + (props.values.bad * -1)
-
-  return (
-    <>
-      {all !== 0 ?
-      <table>
-        <tbody>
-          <StatisticLine text="Good" value={props.values.good}></StatisticLine >
-          <StatisticLine text="Neutral" value={props.values.neutral}></StatisticLine >
-          <StatisticLine text="Bad" value={props.values.bad}></StatisticLine >
-          <StatisticLine text='All' value={all}></StatisticLine >
-          <StatisticLine text='Average' value={values / all}></StatisticLine >
-          <StatisticLine text='Positive' value={props.values.good / all * 100 + ' %'}></StatisticLine >
-        </tbody>
-      </table>
-        : <p>No feedback given</p>
-      }
-    </>
-  )
-}
+//const store = createStore(reducer)
 
 const App = () => {
   // tallenna napit omaan tilaansa

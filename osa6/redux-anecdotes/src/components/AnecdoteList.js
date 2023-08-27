@@ -7,7 +7,7 @@ const AnecdoteList = () => {
       return state.anecdotes.sort((a, b) => b.votes - a.votes)
     }
     else {
-      return state.anecdotes.filter((anecdote) => anecdote.content.toLowerCase().includes(state.filter.toLowerCase())) }
+      return state.anecdotes.filter((anecdote) => anecdote.content.toLowerCase().includes(state.filter.toLowerCase())).sort((a, b) => b.votes - a.votes) }
   })
   const dispatch = useDispatch()
 

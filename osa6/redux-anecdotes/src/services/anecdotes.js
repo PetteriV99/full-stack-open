@@ -13,4 +13,12 @@ const createNew = async (content) => {
   return response.data
 }
 
-export default { getAll, createNew }
+const addLike = async (id) => {
+  // I assume in later tasks we will have an actual backend that will count for us
+  const oldData = await axios.get(`${baseUrl}/${id}`)
+  const object = { content: oldData.data.content, votes: oldData.data.votes + 1 }
+  const response = await axios.put(`${baseUrl}/${id}`, object)
+  return response.data
+}
+
+export default { getAll, createNew, addLike }

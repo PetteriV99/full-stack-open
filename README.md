@@ -24,4 +24,5 @@ Weather API used: https://openweathermap.org/api/one-call-3
     osa6
         unicafe-redux
         redux-anecdotes
+        query-anecdotes
 

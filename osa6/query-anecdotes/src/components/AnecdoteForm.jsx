@@ -9,6 +9,12 @@ const AnecdoteForm = ({client}) => {
   const newAnecdoteMutation = useMutation(createAnecdote, {
     onSuccess: () => {
       client.invalidateQueries({ queryKey: ['anecdotes'] })
+    },
+    onError: () => {
+      dispatch( { payload: `too short anecdote, must be length 5 or more`, type: 'ERROR' } )
+      setTimeout(() => {
+        dispatch( { type: 'RESET' } )
+      }, 5000)
     }
   })
 

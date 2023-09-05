@@ -35,7 +35,7 @@ const App = () => {
       setNotification('')
     }, 5000)
   }
-
+  /*
   const anecdoteById = (id) =>
     anecdotes.find(a => a.id === id)
 
@@ -49,7 +49,7 @@ const App = () => {
 
     setAnecdotes(anecdotes.map(a => a.id === id ? voted : a))
   }
-
+  */
   const match = useMatch('/anecdotes/:id')
   const anecdote = match ? anecdotes.find(anecdote => anecdote.id === Number(match.params.id)) : null
 

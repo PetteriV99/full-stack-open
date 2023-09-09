@@ -1,20 +1,18 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import countryService from '../services/countryService'
 
-export const useCountry = (type) => {
-  const [value, setValue] = useState('')
+export const useCountry = (name) => {
+  const [countryData, setCountryData] = useState(null)
 
-  const onChange = (event) => {
-    setValue(event.target.value)
-  }
-
-  const reset = () => {
-    setValue('')
-  }
+  useEffect(() => {
+    countryService
+      .getCountry(name)
+      .then(initialData => {
+        setCountryData(initialData)
+      })
+  }, [name])
 
   return {
-    type,
-    value,
-    onChange,
-    reset
+    countryData
   }
 }

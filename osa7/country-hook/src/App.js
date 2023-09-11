@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import axios from 'axios'
+import { useState } from 'react'
+import { useCountry } from './hooks'
 
 const useField = (type) => {
   const [value, setValue] = useState('')
@@ -15,20 +15,15 @@ const useField = (type) => {
   }
 }
 
-const useCountry = (name) => {
-  const [country, setCountry] = useState(null)
-
-  useEffect(() => {})
-
-  return country
-}
-
 const Country = ({ country }) => {
+
   if (!country) {
     return null
   }
 
-  if (!country.found) {
+  console.log(country.country.data)
+
+  if (!country.country) {
     return (
       <div>
         not found...

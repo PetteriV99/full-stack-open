@@ -21,9 +21,7 @@ const Country = ({ country }) => {
     return null
   }
 
-  console.log(country.country.data)
-
-  if (!country.country) {
+  if (!country.found) {
     return (
       <div>
         not found...

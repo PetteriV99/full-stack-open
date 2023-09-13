@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import countryService from '../services/countryService'
 
 export const useCountry = (name) => {
-  const [country, setCountry] = useState(null)
+  const [data, setData] = useState(null)
 
   useEffect(() => {
 
@@ -10,12 +10,12 @@ export const useCountry = (name) => {
       countryService
         .getCountry(name)
         .then(initialData => {
-          setCountry({ data: initialData })
+          setData(initialData)
         })
     }
   }, [name])
 
   return {
-    country
+    data
   }
 }

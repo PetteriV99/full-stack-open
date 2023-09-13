@@ -21,7 +21,7 @@ const Country = ({ country }) => {
     return null
   }
 
-  if (country.country === null) {
+  if (country.data === null) {
     return (
       <div>
         not found...
@@ -29,11 +29,12 @@ const Country = ({ country }) => {
     )
   }
 
-  console.log(country.country)
-
   return (
     <div>
-      <h3>{country.country.data.name.common} </h3>
+      <h3>{country.data.name.common} </h3>
+      <div>capital {country.data.capital} </div>
+      <div>population {country.data.population}</div>
+      <img src={country.data.flags.png} height='100' alt={`flag of ${country.data.name.common}`}/>
     </div>
   )
 }

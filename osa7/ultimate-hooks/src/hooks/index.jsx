@@ -1,13 +1,12 @@
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import axios from 'axios'
 
 export const useResource = (baseUrl) => {
   const [resources, setResources] = useState([])
 
-  // ...
-
-  const create = (resource) => {
-    // ...
+  const create = async (resource) => {
+    const response = await axios.post(baseUrl, resource)
+    setResources(response)
   }
 
   const service = {

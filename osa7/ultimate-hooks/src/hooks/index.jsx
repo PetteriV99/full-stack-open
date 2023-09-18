@@ -7,7 +7,7 @@ export const useResource = (baseUrl) => {
   useEffect(() => {
     const getData = async () => {
       const data = await axios.get(baseUrl)
-      setResources(data)
+      setResources(data.data)
     }
     getData()
   }, [baseUrl])

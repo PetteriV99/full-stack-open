@@ -1,8 +1,16 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import axios from 'axios'
 
 export const useResource = (baseUrl) => {
   const [resources, setResources] = useState([])
+
+  useEffect(() => {
+    const getData = async () => {
+      const data = await axios.get(baseUrl)
+      setResources(data)
+    }
+    getData()
+  }, [baseUrl])
 
   const create = async (resource) => {
     const response = await axios.post(baseUrl, resource)

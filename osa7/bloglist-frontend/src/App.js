@@ -1,6 +1,8 @@
 import { useState, useEffect } from 'react'
 import blogService from './services/blogs'
 import loginService from './services/login'
+import { useDispatch } from 'react-redux'
+import { setNotification } from './reducers/notificationReducer'
 
 import Blog from './components/Blog'
 import Notification from './components/Notification'
@@ -8,9 +10,10 @@ import LoginForm from './components/LoginForm'
 import NewBlogForm from './components/NewBlogForm'
 
 const App = () => {
+
+  const dispatch = useDispatch()
+
   const [blogs, setBlogs] = useState([])
-  const [errorMessage, setErrorMessage] = useState(null)
-  const [successMessage, setSuccessMessage] = useState(null)
   const [blogFormVisible, setBlogFormVisible] = useState(false)
   const [user, setUser] = useState(null)
 
@@ -43,10 +46,7 @@ const App = () => {
       blogService.setToken(user.token)
       setUser(user)
     } catch (error) {
-      setErrorMessage('wrong credentials')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      dispatch(setNotification('wrong credentials', 5))
     }
   }
 
@@ -65,16 +65,10 @@ const App = () => {
       const newBlog = await blogService.create({ 'title': newTitle, 'author': newAuthor, 'url': newUrl })
       newBlog.user = user
       setBlogs(blogs.concat(newBlog))
-      setSuccessMessage(`a new blog ${newTitle} by ${newAuthor ? newAuthor : 'unknown author'} was added`)
-      setTimeout(() => {
-        setSuccessMessage(null)
-      }, 5000)
+      dispatch(setNotification(`a new blog ${newTitle} by ${newAuthor ? newAuthor : 'unknown author'} was added`, 5))
       setBlogFormVisible(false)
     } catch (error) {
-      setErrorMessage('title or url is empty')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      dispatch(setNotification('title or url is empty', 5))
     }
   }
 
@@ -89,10 +83,7 @@ const App = () => {
 
       setBlogs(updatedBlogsArray)
     } catch (error) {
-      setErrorMessage('could not update likes')
-      setTimeout(() => {
-        setErrorMessage(null)
-      }, 5000)
+      dispatch(setNotification('could not update likes', 5))
     }
   }
 
@@ -103,10 +94,7 @@ const App = () => {
         await blogService.remove(blog.id)
         setBlogs(blogs.filter((element) => element.id !== blog.id))
       } catch (error) {
-        setErrorMessage('could not remove blog')
-        setTimeout(() => {
-          setErrorMessage(null)
-        }, 5000)
+        dispatch(setNotification('could not remove blog', 5))
       }
     }
   }
@@ -115,7 +103,7 @@ const App = () => {
     return (
       <div>
         <h2>Log in to application</h2>
-        <Notification type={'error'} message={errorMessage} />
+        <Notification/>
         <LoginForm handleLogin={handleLogin} />
       </div>
     )
@@ -126,8 +114,7 @@ const App = () => {
       <h2>blogs</h2>
       <p>{user.name} logged in {logOut()}</p>
       <h2>create new blog</h2>
-      <Notification type={'error'} message={errorMessage} />
-      <Notification type={'success'} message={successMessage} />
+      <Notification/>
       <div style={hideWhenVisible}>
         <button id='showNewBlogForm' onClick={() => setBlogFormVisible(true)}>create new blog</button>
       </div>

@@ -3,6 +3,7 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import { useDispatch } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
+import { initializeBlogs } from './reducers/blogReducer'
 
 import Blog from './components/Blog'
 import Notification from './components/Notification'
@@ -21,9 +22,7 @@ const App = () => {
   const showWhenVisible = { display: blogFormVisible ? '' : 'none' }
 
   useEffect(() => {
-    blogService.getAll().then(blogs =>
-      setBlogs(blogs.sort((a, b) => b.likes - a.likes))
-    )
+    dispatch(initializeBlogs())
   }, [])
 
   useEffect(() => {

@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react'
 import blogService from './services/blogs'
 import loginService from './services/login'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs } from './reducers/blogReducer'
 
@@ -14,7 +14,10 @@ const App = () => {
 
   const dispatch = useDispatch()
 
-  const [blogs, setBlogs] = useState([])
+  const blogs = useSelector(state => {
+    return state.blogs
+  })
+
   const [blogFormVisible, setBlogFormVisible] = useState(false)
   const [user, setUser] = useState(null)
 
@@ -63,7 +66,7 @@ const App = () => {
     try {
       const newBlog = await blogService.create({ 'title': newTitle, 'author': newAuthor, 'url': newUrl })
       newBlog.user = user
-      setBlogs(blogs.concat(newBlog))
+      //setBlogs(blogs.concat(newBlog))
       dispatch(setNotification(`a new blog ${newTitle} by ${newAuthor ? newAuthor : 'unknown author'} was added`, 5))
       setBlogFormVisible(false)
     } catch (error) {
@@ -80,7 +83,7 @@ const App = () => {
         .map(existingBlog => (existingBlog.id === blog.id ? updatedBlog : existingBlog))
         .sort((a, b) => b.likes - a.likes)
 
-      setBlogs(updatedBlogsArray)
+      //setBlogs(updatedBlogsArray)
     } catch (error) {
       dispatch(setNotification('could not update likes', 5))
     }
@@ -91,7 +94,7 @@ const App = () => {
       try {
         console.log(blog.id)
         await blogService.remove(blog.id)
-        setBlogs(blogs.filter((element) => element.id !== blog.id))
+        //setBlogs(blogs.filter((element) => element.id !== blog.id))
       } catch (error) {
         dispatch(setNotification('could not remove blog', 5))
       }

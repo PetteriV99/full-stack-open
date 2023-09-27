@@ -3,7 +3,7 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
-import { initializeBlogs } from './reducers/blogReducer'
+import { initializeBlogs, createBlog } from './reducers/blogReducer'
 
 import Blog from './components/Blog'
 import Notification from './components/Notification'
@@ -62,11 +62,9 @@ const App = () => {
     <button id='logout' onClick={handleLogout}>Logout</button>
   )
 
-  const createBlog = async ({ newTitle, newAuthor, newUrl }) => {
+  const addBlog = async ({ newTitle, newAuthor, newUrl }) => {
     try {
-      const newBlog = await blogService.create({ 'title': newTitle, 'author': newAuthor, 'url': newUrl })
-      newBlog.user = user
-      //setBlogs(blogs.concat(newBlog))
+      dispatch(createBlog({ 'title': newTitle, 'author': newAuthor, 'url': newUrl }))
       dispatch(setNotification(`a new blog ${newTitle} by ${newAuthor ? newAuthor : 'unknown author'} was added`, 5))
       setBlogFormVisible(false)
     } catch (error) {
@@ -79,10 +77,10 @@ const App = () => {
       const updatedBlog = { ...blog, likes: blog.likes + 1 }
       await blogService.update(blog.id, updatedBlog)
 
-      const updatedBlogsArray = blogs
+      /*const updatedBlogsArray = blogs
         .map(existingBlog => (existingBlog.id === blog.id ? updatedBlog : existingBlog))
         .sort((a, b) => b.likes - a.likes)
-
+      */
       //setBlogs(updatedBlogsArray)
     } catch (error) {
       dispatch(setNotification('could not update likes', 5))
@@ -121,7 +119,7 @@ const App = () => {
         <button id='showNewBlogForm' onClick={() => setBlogFormVisible(true)}>create new blog</button>
       </div>
       <div style={showWhenVisible}>
-        <NewBlogForm createBlog={createBlog} />
+        <NewBlogForm createBlog={addBlog} />
         <button id='hideNewBlogForm' onClick={() => setBlogFormVisible(false)}>cancel</button>
       </div>
       {blogs.map(blog =>

@@ -15,7 +15,7 @@ const App = () => {
   const dispatch = useDispatch()
 
   const blogs = useSelector(state => {
-    return state.blogs
+    return state.blogs.toSorted((a, b) => b.likes - a.likes)
   })
 
   const [blogFormVisible, setBlogFormVisible] = useState(false)

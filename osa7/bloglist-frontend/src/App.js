@@ -3,7 +3,7 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
-import { initializeBlogs, createBlog } from './reducers/blogReducer'
+import { initializeBlogs, createBlog, likeBlog } from './reducers/blogReducer'
 
 import Blog from './components/Blog'
 import Notification from './components/Notification'
@@ -74,14 +74,7 @@ const App = () => {
 
   const handleLike = async ({ blog }) => {
     try {
-      const updatedBlog = { ...blog, likes: blog.likes + 1 }
-      await blogService.update(blog.id, updatedBlog)
-
-      /*const updatedBlogsArray = blogs
-        .map(existingBlog => (existingBlog.id === blog.id ? updatedBlog : existingBlog))
-        .sort((a, b) => b.likes - a.likes)
-      */
-      //setBlogs(updatedBlogsArray)
+      dispatch(likeBlog({ blog }))
     } catch (error) {
       dispatch(setNotification('could not update likes', 5))
     }

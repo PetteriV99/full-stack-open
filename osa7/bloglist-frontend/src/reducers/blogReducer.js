@@ -14,11 +14,15 @@ const blogSlice = createSlice({
     updateBlog(state, action) {
       let foundIndex = state.findIndex(blog => blog.id === action.payload.id)
       state.splice(foundIndex, 1, action.payload)
+    },
+    removeBlog(state, action) {
+      let foundIndex = state.findIndex(blog => blog.id === action.payload.id)
+      state.splice(foundIndex, 1)
     }
   }
 })
 
-export const { appendBlog, setBlogs, updateBlog } = blogSlice.actions
+export const { appendBlog, setBlogs, updateBlog, removeBlog } = blogSlice.actions
 
 export const initializeBlogs = () => {
   return async dispatch => {
@@ -45,6 +49,7 @@ export const likeBlog = ( { blog }) => {
 export const deleteBlog = (id) => {
   return async dispatch => {
     await blogService.remove(id)
+    dispatch(removeBlog(id))
   }
 }
 

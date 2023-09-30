@@ -3,7 +3,7 @@ import blogService from './services/blogs'
 import loginService from './services/login'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
-import { initializeBlogs, createBlog, likeBlog } from './reducers/blogReducer'
+import { initializeBlogs, createBlog, likeBlog, deleteBlog } from './reducers/blogReducer'
 
 import Blog from './components/Blog'
 import Notification from './components/Notification'
@@ -83,9 +83,7 @@ const App = () => {
   const handleRemove = async ({ blog }) => {
     if (window.confirm(`Remove blog ${blog.title} by ${blog.user.name || 'unknown'}?`)) {
       try {
-        console.log(blog.id)
-        await blogService.remove(blog.id)
-        //setBlogs(blogs.filter((element) => element.id !== blog.id))
+        dispatch(deleteBlog(blog.id))
       } catch (error) {
         dispatch(setNotification('could not remove blog', 5))
       }

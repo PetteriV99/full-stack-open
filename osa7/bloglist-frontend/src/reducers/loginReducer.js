@@ -3,31 +3,29 @@ import loginService from '../services/login'
 
 const loginSlice = createSlice({
   name: 'login',
-  initialState: [],
+  initialState: null,
   reducers: {
     setLogin(state, action) {
       return action.payload
     },
-    removeLogin(state, action) {
-      let foundIndex = state.findIndex(login => login.id === action.payload.id)
-      state.splice(foundIndex, 1)
+    removeLogin() {
+      return null
     }
   }
 })
 
 export const { setLogin, removeLogin } = loginSlice.actions
 
-export const login = (id) => {
+export const login = ({ username, password }) => {
   return async dispatch => {
-    await loginService.remove(id)
-    dispatch(removeLogin(id))
+    const user = await loginService.login(username, password)
+    dispatch(setLogin(user))
   }
 }
 
-export const logout = (id) => {
+export const logout = () => {
   return async dispatch => {
-    await loginService.remove(id)
-    dispatch(removeLogin(id))
+    dispatch(removeLogin())
   }
 }
 

@@ -4,6 +4,11 @@ import loginService from './services/login'
 import { useDispatch, useSelector } from 'react-redux'
 import { setNotification } from './reducers/notificationReducer'
 import { initializeBlogs, createBlog, likeBlog, deleteBlog } from './reducers/blogReducer'
+import { setLogin } from './reducers/loginReducer'
+
+import {
+  BrowserRouter as Router,  Routes, Route, Link, useNavigate
+} from 'react-router-dom'
 
 import Blog from './components/Blog'
 import Notification from './components/Notification'
@@ -19,7 +24,6 @@ const App = () => {
   })
 
   const [blogFormVisible, setBlogFormVisible] = useState(false)
-  const [user, setUser] = useState(null)
 
   const hideWhenVisible = { display: blogFormVisible ? 'none' : '' }
   const showWhenVisible = { display: blogFormVisible ? '' : 'none' }
@@ -32,7 +36,7 @@ const App = () => {
     const loggedUserJSON = window.localStorage.getItem('loggedBlogappUser')
     if (loggedUserJSON) {
       const user = JSON.parse(loggedUserJSON)
-      setUser(user)
+      dispatch(setLogin(user))
       blogService.setToken(user.token)
     }
   }, [])
@@ -46,7 +50,7 @@ const App = () => {
 
       window.localStorage.setItem('loggedBlogappUser', JSON.stringify(user))
       blogService.setToken(user.token)
-      setUser(user)
+      dispatch(setLogin(user))
     } catch (error) {
       dispatch(setNotification('wrong credentials', 5))
     }
@@ -55,7 +59,7 @@ const App = () => {
   const handleLogout = (event) => {
     event.preventDefault()
     window.localStorage.removeItem('loggedBlogappUser')
-    setUser(null)
+    dispatch(setLogin(null))
   }
 
   const logOut = () => (
@@ -99,6 +103,12 @@ const App = () => {
       </div>
     )
   }
+
+  return (
+    <Router>
+      
+    </Router>
+  )
 
   return (
     <div>

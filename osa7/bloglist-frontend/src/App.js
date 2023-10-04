@@ -7,6 +7,7 @@ import { initializeBlogs, createBlog, likeBlog, deleteBlog } from './reducers/bl
 import { setLogin } from './reducers/loginReducer'
 
 import {
+  // eslint-disable-next-line no-unused-vars
   BrowserRouter as Router,  Routes, Route, Link, useNavigate
 } from 'react-router-dom'
 
@@ -22,6 +23,8 @@ const App = () => {
   const blogs = useSelector(state => {
     return state.blogs.toSorted((a, b) => b.likes - a.likes)
   })
+
+  const user = null
 
   const [blogFormVisible, setBlogFormVisible] = useState(false)
 
@@ -103,12 +106,6 @@ const App = () => {
       </div>
     )
   }
-
-  return (
-    <Router>
-      
-    </Router>
-  )
 
   return (
     <div>

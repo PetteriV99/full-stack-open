@@ -24,7 +24,9 @@ const App = () => {
     return state.blogs.toSorted((a, b) => b.likes - a.likes)
   })
 
-  const user = null
+  const user = useSelector(state => {
+    return state.login
+  })
 
   const [blogFormVisible, setBlogFormVisible] = useState(false)
 

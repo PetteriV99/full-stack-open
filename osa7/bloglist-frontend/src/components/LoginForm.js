@@ -1,25 +1,24 @@
 import { useState } from 'react'
 import PropTypes from 'prop-types'
 //import { useNavigate } from 'react-router-dom'
+import { login } from '../reducers/loginReducer'
 
-const LoginForm = ({ handleLogin }) => {
+const LoginForm = () => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
   //const navigate = useNavigate()
 
-  const login = (event) => {
+  const handleLogin = (event) => {
     event.preventDefault()
-    handleLogin({ username, password })
-    setUsername('')
-    setPassword('')
+    login({ username, password })
     //navigate('/')
   }
 
   return (
 
-    <form onSubmit={login}>
+    <form onSubmit={handleLogin}>
       <div>
                 username
         <input

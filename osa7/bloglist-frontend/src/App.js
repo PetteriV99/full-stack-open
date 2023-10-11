@@ -1,9 +1,10 @@
 import { useEffect } from 'react'
 import blogService from './services/blogs'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from './reducers/blogReducer'
 import { setLogin } from './reducers/loginReducer'
 import Home from './components/Home'
+import { Navigate } from 'react-router-dom'
 
 import {
   // eslint-disable-next-line no-unused-vars
@@ -17,10 +18,10 @@ const App = () => {
 
   const dispatch = useDispatch()
 
-  /*const user = useSelector(state => {
+  const user = useSelector(state => {
     return state.login
   })
-*/
+
   useEffect(() => {
     dispatch(initializeBlogs())
   }, [])
@@ -43,8 +44,8 @@ const App = () => {
           <Link to="/">users</Link>
         </div>
         <Routes>
-          <Route path="/login" element={<LoginForm/>}/>
-          <Route path="/" element={<Home />}/>
+          <Route path="/login" element={<LoginForm onLogin={user}/>}/>
+          <Route path="/" element={user ? <Home /> : <Navigate replace to="/login" />}/>
         </Routes>
       </Router>
     </div>

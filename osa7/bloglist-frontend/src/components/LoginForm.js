@@ -11,6 +11,7 @@ const LoginForm = () => {
 
   const handleLogin = (event) => {
     event.preventDefault()
+    console.log('set login')
     login({ username, password })
     navigate('/')
   }

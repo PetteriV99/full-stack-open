@@ -19,7 +19,6 @@ export const { setLogin, removeLogin } = loginSlice.actions
 export const login = ({ username, password }) => {
   return async dispatch => {
     const user = await loginService.login(username, password)
-    console.log(user)
     dispatch(setLogin(user))
   }
 }

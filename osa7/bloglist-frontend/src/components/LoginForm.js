@@ -1,8 +1,7 @@
 import { useState } from 'react'
 //import { useNavigate } from 'react-router-dom'
-import { login } from '../reducers/loginReducer'
 
-const LoginForm = () => {
+const LoginForm = ( { onLogin } ) => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -11,7 +10,7 @@ const LoginForm = () => {
 
   const handleLogin = (event) => {
     event.preventDefault()
-    login({ username, password })
+    onLogin({ username, password })
     //navigate('/')
   }
 

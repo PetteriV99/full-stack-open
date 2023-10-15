@@ -2,7 +2,8 @@ import { useEffect } from 'react'
 import blogService from './services/blogs'
 import { useDispatch, useSelector } from 'react-redux'
 import { initializeBlogs } from './reducers/blogReducer'
-import { setLogin } from './reducers/loginReducer'
+import { setLogin, login  } from './reducers/loginReducer'
+import { setNotification } from './reducers/notificationReducer'
 import Home from './components/Home'
 import { Navigate } from 'react-router-dom'
 
@@ -21,6 +22,15 @@ const App = () => {
   const user = useSelector(state => {
     return state.login
   })
+
+  const handeLogin = async ({ username, password }) => {
+    try {
+      dispatch(login( { username, password } ))
+      dispatch(setNotification('logged in', 5))
+    } catch (error) {
+      dispatch(setNotification('login failed', 5))
+    }
+  }
 
   useEffect(() => {
     dispatch(initializeBlogs())
@@ -44,7 +54,7 @@ const App = () => {
           <Link to="/">users</Link>
         </div>
         <Routes>
-          <Route path="/login" element={<LoginForm onLogin={user}/>}/>
+          <Route path="/login" element={<LoginForm onLogin={handeLogin}/>}/>
           <Route path="/" element={user ? <Home /> : <Navigate replace to="/login" />}/>
         </Routes>
       </Router>

@@ -11,7 +11,7 @@ const LoginForm = ( { onLogin } ) => {
   const handleLogin = (event) => {
     event.preventDefault()
     onLogin({ username, password })
-    navigate('/')
+    navigate('..')
   }
 
   return (

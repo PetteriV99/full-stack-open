@@ -1,17 +1,17 @@
 import { useState } from 'react'
-//import { useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 
 const LoginForm = ( { onLogin } ) => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
-  //const navigate = useNavigate()
+  const navigate = useNavigate()
 
   const handleLogin = (event) => {
     event.preventDefault()
     onLogin({ username, password })
-    //navigate('/')
+    navigate('/')
   }
 
   return (

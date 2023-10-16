@@ -1,6 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-
+import { initializeBlogs } from '../reducers/blogReducer'
 import Blog from './Blog'
 import Notification from './Notification'
 import NewBlogForm from './NewBlogForm'
@@ -12,9 +12,11 @@ const Home = () => {
 
   const dispatch = useDispatch()
 
-  const blogs = useSelector(state => {
-    return state.blogs.toSorted((a, b) => b.likes - a.likes)
-  })
+  useEffect(() => {
+    dispatch(initializeBlogs())
+  }, [])
+
+  const blogs = useSelector(state => state.blogs)
 
   const [blogFormVisible, setBlogFormVisible] = useState(false)
 

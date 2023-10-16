@@ -6,6 +6,7 @@ const loginSlice = createSlice({
   initialState: null,
   reducers: {
     setLogin(state, action) {
+      //window.localStorage.setItem('loggedBlogappUser', JSON.stringify(action.payload))
       return action.payload
     },
     removeLogin() {
@@ -18,10 +19,12 @@ export const { setLogin, removeLogin } = loginSlice.actions
 
 export const login = ({ username, password }) => {
   return async dispatch => {
-    const user = await loginService.login(username, password)
+    const user = await loginService.login({ username, password })
     dispatch(setLogin(user))
   }
 }
+
+export const getLoggedState = (state) => state.login
 
 export const logout = () => {
   return async dispatch => {

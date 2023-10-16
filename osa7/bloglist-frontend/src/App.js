@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { getLoggedState, login  } from './reducers/loginReducer'
+import { getLoggedState, login, logout  } from './reducers/loginReducer'
 import { setNotification } from './reducers/notificationReducer'
 import Home from './components/Home'
 import { Navigate } from 'react-router-dom'
@@ -11,6 +11,7 @@ import {
 
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
+import Users from './components/Users'
 
 const App = () => {
 
@@ -27,17 +28,23 @@ const App = () => {
     }
   }
 
+  const handleLogout = () => dispatch(logout())
+
   return (
     <div>
       <Router>
         <div>
           <Notification/>
           <h2>blogs</h2>
-          {user ? `${user.name} is logged in` : null}
+          {user ? <>
+            <p>{user.name} is logged in</p>
+            <button onClick={handleLogout}>logout</button>
+          </>: null}
         </div>
         <Routes>
           <Route path="/login" element={<LoginForm onLogin={handeLogin}/>}/>
           <Route path="/" element={user ? <Home /> : <Navigate replace to="/login" />}/>
+          <Route path="/users" element={<Users/>} />
         </Routes>
       </Router>
     </div>

@@ -8,9 +8,6 @@ const loginSlice = createSlice({
     setLogin(state, action) {
       //window.localStorage.setItem('loggedBlogappUser', JSON.stringify(action.payload))
       return action.payload
-    },
-    removeLogin() {
-      return null
     }
   }
 })
@@ -28,7 +25,7 @@ export const getLoggedState = (state) => state.login
 
 export const logout = () => {
   return async dispatch => {
-    dispatch(removeLogin())
+    dispatch(setLogin(null))
   }
 }
 

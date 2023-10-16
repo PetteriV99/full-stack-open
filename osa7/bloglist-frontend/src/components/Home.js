@@ -53,7 +53,6 @@ const Home = () => {
 
   return(
     <div>
-      <h2>blogs</h2>
       <h2>create new blog</h2>
       <Notification/>
       <div style={hideWhenVisible}>

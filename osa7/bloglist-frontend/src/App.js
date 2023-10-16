@@ -32,9 +32,8 @@ const App = () => {
       <Router>
         <div>
           <Notification/>
-          <Link to="/">home</Link>
-          <Link to="/blogs">blogs</Link>
-          <Link to="/users">users</Link>
+          <h2>blogs</h2>
+          {user ? `${user.name} is logged in` : null}
         </div>
         <Routes>
           <Route path="/login" element={<LoginForm onLogin={handeLogin}/>}/>

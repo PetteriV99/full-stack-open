@@ -30,10 +30,16 @@ const App = () => {
 
   const handleLogout = () => dispatch(logout())
 
+  const padding = {
+    padding: 5
+  }
+
   return (
     <div>
       <Router>
         <div>
+          <Link style={padding} to="/">blogs</Link>
+          <Link style={padding} to="/users">users</Link>
           <Notification/>
           <h2>blogs</h2>
           {user ? <>

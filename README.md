@@ -27,6 +27,7 @@ Weather API used: https://openweathermap.org/api/one-call-3
         query-anecdotes
     osa7
         bloglist-frontend
+        bloglist-backend
         routed-anecdotes
         country-hook
         ultimate-hooks

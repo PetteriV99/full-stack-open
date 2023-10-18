@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { getLoggedState, login, logout  } from './reducers/loginReducer'
+import { getLoggedState, login, logout  } from './reducers/authReducer'
 import { setNotification } from './reducers/notificationReducer'
 import Home from './components/Home'
 import { Navigate } from 'react-router-dom'

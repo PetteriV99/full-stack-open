@@ -1,34 +1,34 @@
 import { createSlice } from '@reduxjs/toolkit'
-import loginService from '../services/login'
+import authService from '../services/auth'
 import blogService from '../services/blogs'
 
-const loginSlice = createSlice({
-  name: 'login',
+const authSlice = createSlice({
+  name: 'auth',
   initialState: null,
   reducers: {
-    setLogin(state, action) {
+    setAuth(state, action) {
       //window.localStorage.setItem('loggedBlogappUser', JSON.stringify(action.payload))
       return action.payload
     }
   }
 })
 
-export const { setLogin, removeLogin } = loginSlice.actions
+export const { setAuth, removeAuth } = authSlice.actions
 
 export const login = ({ username, password }) => {
   return async dispatch => {
-    const user = await loginService.login({ username, password })
+    const user = await authService.login({ username, password })
     blogService.setToken(user.token)
-    dispatch(setLogin(user))
+    dispatch(setAuth(user))
   }
 }
 
-export const getLoggedState = (state) => state.login
+export const getLoggedState = (state) => state.auth
 
 export const logout = () => {
   return async dispatch => {
-    dispatch(setLogin(null))
+    dispatch(setAuth(null))
   }
 }
 
-export default loginSlice.reducer
+export default authSlice.reducer

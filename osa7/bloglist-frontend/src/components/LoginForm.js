@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 
-const LoginForm = ( { onLogin } ) => {
+const LoginForm = (props) => {
 
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
@@ -10,8 +10,8 @@ const LoginForm = ( { onLogin } ) => {
 
   const handleLogin = (event) => {
     event.preventDefault()
-    onLogin({ username, password })
-    navigate('..')
+    props.onLogin({ username, password })
+    navigate('/')
   }
 
   return (

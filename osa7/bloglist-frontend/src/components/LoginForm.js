@@ -8,10 +8,10 @@ const LoginForm = (props) => {
 
   const navigate = useNavigate()
 
-  const handleLogin = (event) => {
+  const handleLogin = async (event) => {
     event.preventDefault()
-    props.onLogin({ username, password })
-    navigate('/')
+    await props.onLogin({ username, password })
+    navigate('..')
   }
 
   return (

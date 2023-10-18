@@ -1,0 +1,11 @@
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkozdTJzc3giLCJpZCI6IjY0YzEwYzlmYTgzYzU4ZDZlOTdmYzBmYiIsImlhdCI6MTY5MDM3NjgxM30.l0jV0DqoanfnZR51GimlblS8IaJxg537sgiDUdnJdp0
+
+{
+  "title": "Jussin blogi",
+  "author": "Jussi",
+  "url": "google.fi",
+  "likes": 10,
+  "userId": "64c10c9fa83c58d6e97fc0fb"
+}

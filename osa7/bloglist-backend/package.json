@@ -1,7 +1,7 @@
 {
     "name": "blogilista",
     "version": "1.0.0",
-    "description": "Repository for part 5 of Full Stack Open",
+    "description": "Repository for part 7 of Full Stack Open",
     "main": "index.js",
     "scripts": {
         "start": "cross-env NODE_ENV=production node index.js",

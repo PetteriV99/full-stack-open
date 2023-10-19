@@ -12,11 +12,35 @@ const Users = () => {
     dispatch(initializeUsers())
   }, [])
 
+  console.log(users)
+
+  const row = {
+    display: 'flex'
+  }
+
+  const column = {
+    flex: '10%'
+  }
+
+  const column2 = {
+    flex: '90%'
+  }
+
+
   return(
     <div>
       <h2>users</h2>
       {users.map(user =>
-        <p key={user.name}>{user.name}</p>
+        <div style={row} key={user.name}>
+          <div style={column}>
+            <h4>name</h4>
+            {user.name}
+          </div>
+          <div style={column2}>
+            <h4>blogs created</h4>
+            {user.blogs.length}
+          </div>
+        </div>
       )}
     </div>
   )

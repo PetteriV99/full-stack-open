@@ -12,8 +12,6 @@ const Users = () => {
     dispatch(initializeUsers())
   }, [])
 
-  console.log(users)
-
   const row = {
     display: 'flex'
   }

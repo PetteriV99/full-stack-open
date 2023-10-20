@@ -34,6 +34,7 @@ export const initializeBlogs = () => {
 export const createBlog = params => {
   return async dispatch => {
     const newAnecdote = await blogService.create(params)
+    console.log(newAnecdote)
     dispatch(appendBlog(newAnecdote))
   }
 }

@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getLoggedState, login, logout  } from './reducers/authReducer'
 import { setNotification } from './reducers/notificationReducer'
 import Home from './components/Home'
-import { Navigate } from 'react-router-dom'
+import { Navigate, useMatch } from 'react-router-dom'
 
 import {
   // eslint-disable-next-line no-unused-vars
@@ -27,6 +27,11 @@ const App = () => {
       dispatch(setNotification('login failed', 5))
     }
   }
+
+  const match = useMatch('/notes/:id')
+  const users = useSelector(state => state.users)
+  const otherUser = match ? users.find(user => user.id === Number(match.params.id))
+    : null
 
   const handleLogout = () => dispatch(logout())
 

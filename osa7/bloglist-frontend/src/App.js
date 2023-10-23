@@ -5,13 +5,13 @@ import Home from './components/Home'
 import { Navigate, useMatch } from 'react-router-dom'
 
 import {
-  // eslint-disable-next-line no-unused-vars
-  BrowserRouter as Router,  Routes, Route, Link
+  Routes, Route, Link
 } from 'react-router-dom'
 
 import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import Users from './components/Users'
+import User from './components/User'
 
 const App = () => {
 
@@ -28,10 +28,12 @@ const App = () => {
     }
   }
 
-  const match = useMatch('/notes/:id')
+  const match = useMatch('/users/:id')
   const users = useSelector(state => state.users)
   const otherUser = match ? users.find(user => user.id === Number(match.params.id))
     : null
+
+  console.log(users.find(user => user.id))
 
   const handleLogout = () => dispatch(logout())
 
@@ -41,23 +43,22 @@ const App = () => {
 
   return (
     <div>
-      <Router>
-        <div>
-          <Link style={padding} to="/">blogs</Link>
-          <Link style={padding} to="/users">users</Link>
-          <Notification/>
-          <h2>blogs</h2>
-          {user ? <>
-            <p>{user.name} is logged in</p>
-            <button onClick={handleLogout}>logout</button>
-          </>: null}
-        </div>
-        <Routes>
-          <Route path="/login" element={<LoginForm onLogin={handeLogin}/>}/>
-          <Route path="/" element={user ? <Home /> : <Navigate replace to="/login" />}/>
-          <Route path="/users" element={user ? <Users /> : <Navigate replace to="/login" />} />
-        </Routes>
-      </Router>
+      <div>
+        <Link style={padding} to="/">blogs</Link>
+        <Link style={padding} to="/users">users</Link>
+        <Notification/>
+        <h2>blogs</h2>
+        {user ? <>
+          <p>{user.name} is logged in</p>
+          <button onClick={handleLogout}>logout</button>
+        </>: null}
+      </div>
+      <Routes>
+        <Route path="/users/:id" element={<User user={otherUser} />} />
+        <Route path="/login" element={<LoginForm onLogin={handeLogin}/>}/>
+        <Route path="/" element={user ? <Home /> : <Navigate replace to="/login" />}/>
+        <Route path="/users" element={user ? <Users /> : <Navigate replace to="/login" />} />
+      </Routes>
     </div>
   )
 }

@@ -1,4 +1,9 @@
-const User = ({ user }) => {
+const User = (user) => {
+
+  if (!user)
+  {
+    return null
+  }
 
   return(
     <div>

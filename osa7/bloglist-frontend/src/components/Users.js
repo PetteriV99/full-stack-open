@@ -24,7 +24,6 @@ const Users = () => {
     flex: '90%'
   }
 
-
   return(
     <div>
       <h2>users</h2>
@@ -32,7 +31,7 @@ const Users = () => {
         <div style={row} key={user.name}>
           <div style={column}>
             <h4>name</h4>
-            {user.name}
+            <a href={`/users/${user.id}`}>{user.name}</a>
           </div>
           <div style={column2}>
             <h4>blogs created</h4>

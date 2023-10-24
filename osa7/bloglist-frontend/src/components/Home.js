@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { initializeBlogs } from '../reducers/blogReducer'
-import Notification from './Notification'
 import NewBlogForm from './NewBlogForm'
 import { Link } from 'react-router-dom'
 
@@ -43,8 +42,6 @@ const Home = () => {
 
   return(
     <div>
-      <h2>create new blog</h2>
-      <Notification/>
       <div style={hideWhenVisible}>
         <button id='showNewBlogForm' onClick={() => setBlogFormVisible(true)}>create new blog</button>
       </div>

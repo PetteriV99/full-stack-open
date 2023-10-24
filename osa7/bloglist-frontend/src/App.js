@@ -24,6 +24,7 @@ const App = () => {
     try {
       // this is to return a Promise
       await dispatch(login( { username, password } ))
+      dispatch(setNotification('logged in', 5))
     } catch (error) {
       dispatch(setNotification('login failed', 5))
     }
@@ -48,16 +49,16 @@ const App = () => {
 
   return (
     <div>
-      <div>
+      <div style={{ backgroundColor: 'LightGray' }}>
         <Link style={padding} to="/">blogs</Link>
         <Link style={padding} to="/users">users</Link>
-        <Notification/>
-        <h2>blogs</h2>
         {user ? <>
-          <p>{user.name} is logged in</p>
+          <em style={padding}>{user.name} is logged in</em>
           <button onClick={handleLogout}>logout</button>
         </>: null}
       </div>
+      <Notification />
+      <h2>blogs app</h2>
       <Routes>
         <Route path="/blogs/:id" element={<Blog blog={blog}></Blog>}></Route>
         <Route path="/users/:id" element={<User user={otherUser} />} />

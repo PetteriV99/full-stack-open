@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types'
 import { likeBlog, deleteBlog } from '../reducers/blogReducer'
 import { useDispatch } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
@@ -41,10 +40,6 @@ const Blog = ({ blog }) => {
       <button id='remove' onClick={handleRemove}>remove</button>
     </div>
   )
-}
-
-Blog.propTypes = {
-  blog: PropTypes.object.isRequired,
 }
 
 export default Blog

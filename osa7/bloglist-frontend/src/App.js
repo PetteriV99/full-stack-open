@@ -18,7 +18,6 @@ const App = () => {
   const dispatch = useDispatch()
 
   const user = useSelector(state => state.auth)
-  console.log(user)
 
   const handeLogin = async ({ username, password }) => {
     try {
@@ -31,7 +30,7 @@ const App = () => {
 
   const match = useMatch('/users/:id')
   const users = useSelector(state => state.users)
-  const otherUser = match ? users.find(user => user.id === Number(match.params.id))
+  const otherUser = match ? users.find(user => user.id === match.params.id)
     : null
 
   const handleLogout = () => dispatch(logout())

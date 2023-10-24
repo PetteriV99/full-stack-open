@@ -1,8 +1,12 @@
-const User = (user) => {
+const User = ({ user }) => {
 
   if (!user)
   {
-    return null
+    return(
+      <div>
+        <h2>user data is missing</h2>
+      </div>
+    )
   }
 
   return(

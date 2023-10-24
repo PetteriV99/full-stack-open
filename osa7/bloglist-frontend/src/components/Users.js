@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { initializeUsers } from '../reducers/userReducer'
-import { useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 
 const Users = () => {
 
@@ -12,12 +12,6 @@ const Users = () => {
   useEffect(() => {
     dispatch(initializeUsers())
   }, [])
-
-  const navigate = useNavigate()
-
-  const handleNavigate = async (userID) => {
-    navigate(`/users/${userID}`)
-  }
 
   const row = {
     display: 'flex'
@@ -38,7 +32,7 @@ const Users = () => {
         <div style={row} key={user.name}>
           <div style={column}>
             <h4>name</h4>
-            <a onClick={() => handleNavigate(user.id)}>{user.name}</a>
+            <Link to={`/users/${user.id}`}>{user.name}</Link>
           </div>
           <div style={column2}>
             <h4>blogs created</h4>

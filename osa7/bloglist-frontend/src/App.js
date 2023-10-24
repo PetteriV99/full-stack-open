@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux'
-import { getLoggedState, login, logout  } from './reducers/authReducer'
+import { login, logout  } from './reducers/authReducer'
 import { setNotification } from './reducers/notificationReducer'
 import Home from './components/Home'
 import { Navigate, useMatch } from 'react-router-dom'
@@ -17,7 +17,8 @@ const App = () => {
 
   const dispatch = useDispatch()
 
-  const user = useSelector(getLoggedState)
+  const user = useSelector(state => state.auth)
+  console.log(user)
 
   const handeLogin = async ({ username, password }) => {
     try {
@@ -32,8 +33,6 @@ const App = () => {
   const users = useSelector(state => state.users)
   const otherUser = match ? users.find(user => user.id === Number(match.params.id))
     : null
-
-  console.log(users.find(user => user.id))
 
   const handleLogout = () => dispatch(logout())
 

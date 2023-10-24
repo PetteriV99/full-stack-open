@@ -10,7 +10,7 @@ const authSlice = createSlice({
   reducers: {
     setAuth(state, action) {
       localStorage.setItem('loggedBlogappUser', JSON.stringify(action.payload))
-      state.user = action.payload
+      return action.payload
     },
     removeAuth(state) {
       state.user = null

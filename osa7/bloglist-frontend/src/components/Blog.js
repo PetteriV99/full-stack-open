@@ -1,59 +1,50 @@
-import { useState } from 'react'
 import PropTypes from 'prop-types'
+import { likeBlog, deleteBlog } from '../reducers/blogReducer'
+import { useDispatch } from 'react-redux'
+import { setNotification } from '../reducers/notificationReducer'
 
-const Blog = ({ blog, ownedByUser, handleLike, handleRemove }) => {
-  const [visible, setVisible] = useState(false)
+const Blog = ({ blog }) => {
 
-  const hideWhenVisible = { display: visible ? 'none' : '' }
-  const showWhenVisible = { display: visible ? '' : 'none' }
-
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
+  if (!blog) {
+    return(<p>no blog data</p>)
   }
 
-  const toggleVisibility = () => {
-    setVisible(!visible)
+  const dispatch = useDispatch()
+
+  const handleLike = async () => {
+    try {
+      dispatch(likeBlog({ blog }))
+    } catch (error) {
+      dispatch(setNotification('could not update likes', 5))
+    }
   }
 
-  const like = () => {
-    handleLike({ blog })
+  const handleRemove = async () => {
+    if (window.confirm(`Remove blog ${blog.title} by ${blog.user.name || 'unknown'}?`)) {
+      try {
+        dispatch(deleteBlog(blog.id))
+      } catch (error) {
+        dispatch(setNotification('could not remove blog', 5))
+      }
+    }
   }
-
-  const remove = () => {
-    handleRemove( { blog } )
-  }
-
-
-  // There isn't a way to check the id of the current user unless I modify the backend
-  const blogUserName = blog.user === null ? 'unknown' : blog.user?.name
 
   return (
-    <div style={blogStyle} className='blog'>
-      {blog.title} by {blog.author}
-      <button id='showBlogDetails' onClick={toggleVisibility} style={hideWhenVisible}>show</button>
-      <button id='hideBlogDetails' onClick={toggleVisibility} style={showWhenVisible}>hide</button>
-      <div style={showWhenVisible} className='togglableContent'>
-        {blog.url}
-        <br/>
-        likes {blog.likes} <button id='like' onClick={like}>like</button>
-        <br/>
-        created by {blogUserName}
-        <br/>
-        {ownedByUser ? <button id='remove' onClick={remove}>remove</button> : <></>}
-      </div>
+    <div>
+      <h1>{blog.title} by {blog.author}</h1>
+      {blog.url}
+      <br/>
+      likes {blog.likes} <button id='like' onClick={handleLike}>like</button>
+      <br/>
+      created by {blog.author}
+      <br/>
+      <button id='remove' onClick={handleRemove}>remove</button>
     </div>
   )
 }
 
 Blog.propTypes = {
   blog: PropTypes.object.isRequired,
-  ownedByUser: PropTypes.bool.isRequired,
-  handleLike: PropTypes.func.isRequired,
-  handleRemove: PropTypes.func.isRequired
 }
 
 export default Blog

@@ -1,12 +1,12 @@
 import { useState, useEffect } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { initializeBlogs } from '../reducers/blogReducer'
-import Blog from './Blog'
 import Notification from './Notification'
 import NewBlogForm from './NewBlogForm'
+import { Link } from 'react-router-dom'
 
 import { setNotification } from '../reducers/notificationReducer'
-import { createBlog, likeBlog, deleteBlog } from '../reducers/blogReducer'
+import { createBlog  } from '../reducers/blogReducer'
 
 const Home = () => {
 
@@ -33,22 +33,12 @@ const Home = () => {
     }
   }
 
-  const handleLike = async ({ blog }) => {
-    try {
-      dispatch(likeBlog({ blog }))
-    } catch (error) {
-      dispatch(setNotification('could not update likes', 5))
-    }
-  }
-
-  const handleRemove = async ({ blog }) => {
-    if (window.confirm(`Remove blog ${blog.title} by ${blog.user.name || 'unknown'}?`)) {
-      try {
-        dispatch(deleteBlog(blog.id))
-      } catch (error) {
-        dispatch(setNotification('could not remove blog', 5))
-      }
-    }
+  const blogStyle = {
+    paddingTop: 10,
+    paddingLeft: 2,
+    border: 'solid',
+    borderWidth: 1,
+    marginBottom: 5
   }
 
   return(
@@ -63,7 +53,9 @@ const Home = () => {
         <button id='hideNewBlogForm' onClick={() => setBlogFormVisible(false)}>cancel</button>
       </div>
       {blogs.map(blog =>
-        <Blog key={blog.id} blog={blog} handleLike={handleLike} handleRemove={handleRemove} ownedByUser={false} />
+        <div style={blogStyle} className='blog' key={blog.id}>
+          <Link to={`blogs/${blog.id}`}>{blog.title}</Link>
+        </div>
       )}
     </div>
   )

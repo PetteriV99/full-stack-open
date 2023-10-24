@@ -12,6 +12,7 @@ import Notification from './components/Notification'
 import LoginForm from './components/LoginForm'
 import Users from './components/Users'
 import User from './components/User'
+import Blog from './components/Blog'
 
 const App = () => {
 
@@ -28,10 +29,16 @@ const App = () => {
     }
   }
 
-  const match = useMatch('/users/:id')
+  const blogs = useSelector(state => state.blogs)
+
+  const matchBlogs = useMatch('/blogs/:id')
+  const matchUsers = useMatch('/users/:id')
+
   const users = useSelector(state => state.users)
-  const otherUser = match ? users.find(user => user.id === match.params.id)
+  const otherUser = matchUsers ? users.find(user => user.id === matchUsers.params.id)
     : null
+
+  const blog = matchBlogs ? blogs.find(blog => blog.id === matchBlogs.params.id) : null
 
   const handleLogout = () => dispatch(logout())
 
@@ -52,6 +59,7 @@ const App = () => {
         </>: null}
       </div>
       <Routes>
+        <Route path="/blogs/:id" element={<Blog blog={blog}></Blog>}></Route>
         <Route path="/users/:id" element={<User user={otherUser} />} />
         <Route path="/login" element={<LoginForm onLogin={handeLogin}/>}/>
         <Route path="/" element={user ? <Home /> : <Navigate replace to="/login" />}/>

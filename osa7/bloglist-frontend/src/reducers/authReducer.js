@@ -10,6 +10,7 @@ const authSlice = createSlice({
   reducers: {
     setAuth(state, action) {
       localStorage.setItem('loggedBlogappUser', JSON.stringify(action.payload))
+      axios.defaults.headers.common['Authorization'] = `Bearer ${userJSON.token}`
       return action.payload
     },
     removeAuth(state) {

@@ -1,5 +1,6 @@
 const blogsRouter = require('express').Router()
 const Blog = require('../models/blog')
+const Comment = require('../models/comment')
 const middleware = require('../utils/middleware')
 
 blogsRouter.get('/', async (request, response) => {
@@ -88,6 +89,17 @@ blogsRouter.put('/:id', middleware.userExtractor, async (request, response) => {
   else {
     response.status(401).json({ error: 'blog not created by user' })
   }
+})
+
+blogsRouter.post('/:id/comments', async (request, response) => {
+  const body = request.body
+
+  if (!body.content) {
+    return response.status(400).json({
+      error: 'missing comment content'
+    })
+  }
+
 })
 
 module.exports = blogsRouter

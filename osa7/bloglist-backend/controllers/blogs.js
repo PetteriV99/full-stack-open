@@ -91,7 +91,7 @@ blogsRouter.put('/:id', middleware.userExtractor, async (request, response) => {
   }
 })
 
-blogsRouter.post('/:id/comments', async (request, response) => {
+blogsRouter.post('/:id/comments', middleware.userExtractor, async (request, response) => {
   const body = request.body
 
   if (!body.content) {
@@ -99,6 +99,22 @@ blogsRouter.post('/:id/comments', async (request, response) => {
       error: 'missing comment content'
     })
   }
+
+  const blogForComment = await Blog.findById(request.params.id)
+
+  if (!blogForComment) {
+    return response.status(404).end()
+  }
+
+  const comment = new Comment({
+    content: body.content,
+    blog: blogForComment._id,
+  })
+
+  const savedComment = await comment.save()
+  blogForComment.comments = blogForComment.comments.concat(savedComment._id)
+  await blogForComment.save()
+  response.status(201).json(savedComment)
 
 })
 

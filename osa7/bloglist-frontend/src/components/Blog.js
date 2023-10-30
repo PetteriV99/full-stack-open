@@ -28,6 +28,8 @@ const Blog = ({ blog }) => {
     }
   }
 
+  console.log(blog.comments)
+
   return (
     <div>
       <h1>{blog.title} by {blog.author}</h1>
@@ -38,6 +40,12 @@ const Blog = ({ blog }) => {
       created by {blog.author}
       <br/>
       <button id='remove' onClick={handleRemove}>remove</button>
+      <h2>comments</h2>
+      <ul>
+        {blog.comments.map(comment =>
+          <li key={comment.id}>{comment.content}</li>
+        )}
+      </ul>
     </div>
   )
 }

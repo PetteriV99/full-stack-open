@@ -1,6 +1,7 @@
-import { likeBlog, deleteBlog } from '../reducers/blogReducer'
+import { likeBlog, deleteBlog, commentBlog } from '../reducers/blogReducer'
 import { useDispatch } from 'react-redux'
 import { setNotification } from '../reducers/notificationReducer'
+import { useState } from 'react'
 
 const Blog = ({ blog }) => {
 
@@ -9,6 +10,8 @@ const Blog = ({ blog }) => {
   }
 
   const dispatch = useDispatch()
+
+  const [comment, setComment] = useState('')
 
   const handleLike = async () => {
     try {
@@ -28,7 +31,14 @@ const Blog = ({ blog }) => {
     }
   }
 
-  console.log(blog.comments)
+  const handleComment = async (event) => {
+    event.preventDefault()
+    try {
+      dispatch(commentBlog(blog.id, comment))
+    } catch (error) {
+      dispatch(setNotification('could not add comment', 5))
+    }
+  }
 
   return (
     <div>
@@ -41,6 +51,10 @@ const Blog = ({ blog }) => {
       <br/>
       <button id='remove' onClick={handleRemove}>remove</button>
       <h2>comments</h2>
+      <form onSubmit={handleComment}>
+        <input type="text"  onChange={({ target }) => setComment(target.value)} />
+        <button type="submit">add comment</button>
+      </form>
       <ul>
         {blog.comments.map(comment =>
           <li key={comment.id}>{comment.content}</li>

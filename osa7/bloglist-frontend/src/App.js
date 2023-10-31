@@ -58,7 +58,7 @@ const App = () => {
         </>: null}
       </div>
       <Notification />
-      <h2>blogs app</h2>
+      <h2 className="text-3xl font-bold underline">blogs app</h2>
       <Routes>
         <Route path="/blogs/:id" element={<Blog blog={blog}></Blog>}></Route>
         <Route path="/users/:id" element={<User user={otherUser} />} />

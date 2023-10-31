@@ -1,3 +1,4 @@
+/* eslint-disable no-undef */
 module.exports = {
   'env': {
     'browser': true,
@@ -7,7 +8,8 @@ module.exports = {
   },
   'extends': [
     'eslint:recommended',
-    'plugin:react/recommended'
+    'plugin:react/recommended',
+    'plugin:tailwindcss/recommended'
   ],
   'parserOptions': {
     'ecmaFeatures': {

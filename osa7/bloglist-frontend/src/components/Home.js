@@ -50,7 +50,7 @@ const Home = () => {
         <button id='hideNewBlogForm' onClick={() => setBlogFormVisible(false)}>cancel</button>
       </div>
       {blogs.map(blog =>
-        <div style={blogStyle} className='blog' key={blog.id}>
+        <div style={blogStyle} key={blog.id}>
           <Link to={`blogs/${blog.id}`}>{blog.title}</Link>
         </div>
       )}

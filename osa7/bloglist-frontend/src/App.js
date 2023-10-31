@@ -58,22 +58,22 @@ const App = () => {
             </div>
             <div className="block w-full grow lg:flex lg:w-auto lg:items-center">
               <div className="text-sm lg:grow">
-                <a href="#responsive-header" className="mr-4 mt-4 block text-gray-200 hover:text-white lg:mt-0 lg:inline-block">
+                <div href="#responsive-header" className="mr-4 mt-4 block text-gray-200 hover:text-white lg:mt-0 lg:inline-block">
                   <Link to="/">Blogs</Link>
-                </a>
-                <a href="#responsive-header" className="mr-4 mt-4 block text-gray-200 hover:text-white lg:mt-0 lg:inline-block">
+                </div>
+                <div href="#responsive-header" className="mr-4 mt-4 block text-gray-200 hover:text-white lg:mt-0 lg:inline-block">
                   <Link to="/users">Users</Link>
-                </a>
+                </div>
               </div>
               <div>
-                <a href="#responsive-header" className="mt-4 block text-gray-200 hover:text-white lg:mt-0 lg:inline-block">
+                <div href="#responsive-header" className="mt-4 block text-gray-200 hover:text-white lg:mt-0 lg:inline-block">
                   {user ? <>
                     <div className="flex flex-wrap items-center justify-between">
                       <em className='mr-3'>{user.name} is logged in</em>
                       <button className='flex items-center rounded border border-gray-400 px-3 py-2 text-gray-200 hover:border-white hover:text-white' onClick={handleLogout}>logout</button>
                     </div>
                   </>: <Link to='/login'>Login</Link>}
-                </a>
+                </div>
               </div>
             </div>
           </nav>

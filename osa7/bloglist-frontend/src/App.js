@@ -24,9 +24,9 @@ const App = () => {
     try {
       // this is to return a Promise
       await dispatch(login( { username, password } ))
-      dispatch(setNotification('logged in', 5))
+      dispatch(setNotification('Logged in', 5, 'success'))
     } catch (error) {
-      dispatch(setNotification('login failed', 5))
+      dispatch(setNotification('Login failed', 5, 'error'))
     }
   }
 
@@ -41,7 +41,10 @@ const App = () => {
 
   const blog = matchBlogs ? blogs.find(blog => blog.id === matchBlogs.params.id) : null
 
-  const handleLogout = () => dispatch(logout())
+  const handleLogout = () => {
+    dispatch(logout())
+    dispatch(setNotification('Logged out!', 5, 'success'))
+  }
 
   return (
     <div>

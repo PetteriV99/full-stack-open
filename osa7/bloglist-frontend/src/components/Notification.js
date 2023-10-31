@@ -2,19 +2,27 @@ import { useSelector } from 'react-redux'
 
 const Notification = () => {
 
-  const notification = useSelector(state => state.notification)
+  const notifications = useSelector(state => state.notification)
 
-  if (!notification) {
-    return (null)
+  console.log(notifications)
+
+  if (notifications.length <= 0) {
+    return(null)
   }
 
-  const style = {
-    padding: 10,
-    borderWidth: 1
-  }
   return (
-    <div style={style}>
-      {notification}
+    <div>
+      {notifications.map( notification =>
+        <div key={notification.message} className="fixed bottom-0 w-full bg-blue-500 px-4 py-2 text-white">
+          <div className="flex justify-between">
+            <div>
+              <h3 className="font-bold">Success!</h3>
+              <p>{notification.message}</p>
+            </div>
+          </div>
+        </div>
+      )
+      }
     </div>
   )
 }

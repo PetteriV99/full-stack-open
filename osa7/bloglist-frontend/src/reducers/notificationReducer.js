@@ -11,6 +11,7 @@ const notificationSlice = createSlice({
       })
     },
     removeNotification(state) {
+      // It is my intent to always delete the latest notification first
       state.pop()
       return state
     }

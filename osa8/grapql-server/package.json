@@ -1,0 +1,23 @@
+{
+  "name": "grapql-server",
+  "version": "1.0.0",
+  "description": "part 8 of full stack open",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PetteriV99/full-stack-open.git"
+  },
+  "author": "PetteriV99",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PetteriV99/full-stack-open/issues"
+  },
+  "homepage": "https://github.com/PetteriV99/full-stack-open#readme",
+  "dependencies": {
+    "@apollo/server": "^4.9.5",
+    "graphql": "^16.8.1"
+  }
+}

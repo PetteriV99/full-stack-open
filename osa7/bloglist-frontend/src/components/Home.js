@@ -25,35 +25,31 @@ const Home = () => {
   const addBlog = async ({ newTitle, newAuthor, newUrl }) => {
     try {
       dispatch(createBlog({ 'title': newTitle, 'author': newAuthor, 'url': newUrl }))
-      dispatch(setNotification(`a new blog ${newTitle} by ${newAuthor ? newAuthor : 'unknown author'} was added`, 5))
+      dispatch(setNotification(`a new blog ${newTitle} by ${newAuthor ? newAuthor : 'unknown author'} was added`, 5, 'success'))
       setBlogFormVisible(false)
     } catch (error) {
-      dispatch(setNotification('title or url is empty', 5))
+      dispatch(setNotification('title or url is empty', 5, 'error'))
     }
-  }
-
-  const blogStyle = {
-    paddingTop: 10,
-    paddingLeft: 2,
-    border: 'solid',
-    borderWidth: 1,
-    marginBottom: 5
   }
 
   return(
     <div>
-      <div style={hideWhenVisible}>
-        <button id='showNewBlogForm' onClick={() => setBlogFormVisible(true)}>create new blog</button>
+      <div className="items-center justify-center px-8 pt-6" style={hideWhenVisible}>
+        <button id='showNewBlogForm' className=" rounded bg-blue-500 px-4 py-2 font-bold text-white hover:bg-blue-700 focus:outline-none" onClick={() => setBlogFormVisible(true)}>create new blog</button>
       </div>
-      <div style={showWhenVisible}>
+      <div style={showWhenVisible} className="items-center justify-center px-8 pt-6">
         <NewBlogForm createBlog={addBlog} />
-        <button id='hideNewBlogForm' onClick={() => setBlogFormVisible(false)}>cancel</button>
+        <button id='hideNewBlogForm' className=" mt-2 rounded bg-red-500 px-4 py-2 font-bold text-white hover:bg-red-700 focus:outline-none" onClick={() => setBlogFormVisible(false)}>cancel</button>
       </div>
-      {blogs.map(blog =>
-        <div style={blogStyle} key={blog.id}>
-          <Link to={`blogs/${blog.id}`}>{blog.title}</Link>
+      <div className="flex min-h-screen bg-gray-200">
+        <div className="w-full list-disc rounded bg-white px-8 pb-8 pt-6 shadow-md">
+          {blogs.map(blog =>
+            <div className="border-b border-gray-200 py-4" key={blog.id}>
+              <Link className="font-bold text-gray-700" to={`blogs/${blog.id}`}>{blog.title} by {blog.author}</Link>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   )
 

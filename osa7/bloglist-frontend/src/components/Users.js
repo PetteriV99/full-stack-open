@@ -13,36 +13,27 @@ const Users = () => {
     dispatch(initializeUsers())
   }, [])
 
-  const row = {
-    display: 'flex'
-  }
-
-  const column = {
-    flex: '10%'
-  }
-
-  const column2 = {
-    flex: '90%'
-  }
-
   return(
-    <div>
-      <h2>users</h2>
-      {users.map(user =>
-        <div style={row} key={user.name}>
-          <div style={column}>
-            <h4>name</h4>
-            <Link to={`/users/${user.id}`}>{user.name}</Link>
-          </div>
-          <div style={column2}>
-            <h4>blogs created</h4>
-            {user.blogs.length}
-          </div>
+    <div className="items-center justify-center px-8 pt-6">
+      <h2 className="items-center justify-center px-8 py-6 text-xl font-bold">Users</h2>
+      <div className="flex min-h-screen bg-gray-200">
+        <div className="w-full list-disc rounded bg-white px-8 pb-8 pt-6 shadow-md">
+          {users.map(user =>
+            <div key={user.name} className="border-b border-gray-200 py-4 hover:bg-gray-100">
+              <Link to={`/users/${user.id}`}>
+                <div className="font-bold text-gray-700">
+                  {user.name}
+                </div>
+                <div>
+                  {user.blogs.length} blogs created
+                </div>
+              </Link>
+            </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   )
-
 }
 
 export default Users

@@ -59,7 +59,7 @@ const NewBlogForm = ({ createBlog }) => {
           onChange={({ target }) => setNewUrl(target.value)}
         />
       </div>
-      <button className=" mt-2 rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700 focus:outline-none" id='createBlog' type="submit">create</button>
+      <button className=" mt-2 rounded bg-green-500 px-4 py-2 font-bold text-white hover:bg-green-700 focus:outline-none" id='createBlog' type="submit">Create</button>
     </form>
   )
 }

@@ -31,4 +31,6 @@ Weather API used: https://openweathermap.org/api/one-call-3
         routed-anecdotes
         country-hook
         ultimate-hooks
+    osa8
+        graphql-server
 

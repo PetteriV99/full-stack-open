@@ -121,16 +121,6 @@ const typeDefs = `
     allAuthors: [Author!]!
   }
 `
-/*
-type Book {
-  title: String!
-  published: String
-  author: String
-  id: String
-  genres: Array
-}
-*/
-
 const resolvers = {
   Query: {
     dummy: () => 0,

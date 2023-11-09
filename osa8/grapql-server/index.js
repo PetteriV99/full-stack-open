@@ -110,6 +110,7 @@ const typeDefs = `
   type Author {
     name: String!,
     id: String,
+    born: Int
     bookCount: Int
   }
 
@@ -128,6 +129,12 @@ const resolvers = {
     authorCount: () => authors.length,
     allBooks: () => books,
     allAuthors: () => authors
+  },
+  Author: {
+    name: (root) => root.name,
+    id: (root) => root.id,
+    born: (root) => root.born,
+    bookCount: (root) => books.bookCount
   }
 }
 

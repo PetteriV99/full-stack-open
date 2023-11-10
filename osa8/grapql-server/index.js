@@ -134,7 +134,7 @@ const resolvers = {
     name: (root) => root.name,
     id: (root) => root.id,
     born: (root) => root.born,
-    bookCount: (root) => books.bookCount
+    bookCount: (root) => books.filter(book => book.author === root.name).length
   }
 }
 

@@ -127,7 +127,7 @@ const resolvers = {
     dummy: () => 0,
     bookCount: () => books.length,
     authorCount: () => authors.length,
-    allBooks: () => books,
+    allBooks: () => (root, args) => books.find(b => b.author === args.author),
     allAuthors: () => authors
   },
   Author: {

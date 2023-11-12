@@ -119,7 +119,7 @@ const typeDefs = `
     bookCount: Int,
     authorCount: Int,
     allBooks: [Book!]!,
-    allAuthors: [Author!]!
+    allAuthors(author: String): [Author!]!
   }
 `
 const resolvers = {
@@ -127,7 +127,7 @@ const resolvers = {
     dummy: () => 0,
     bookCount: () => books.length,
     authorCount: () => authors.length,
-    allBooks: () => (root, args) => books.find(b => b.author === args.author),
+    allBooks: (root, args) => books.find(b => b.author === args.author),
     allAuthors: () => authors
   },
   Author: {

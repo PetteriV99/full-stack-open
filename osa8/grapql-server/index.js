@@ -118,8 +118,8 @@ const typeDefs = `
     dummy: Int,
     bookCount: Int,
     authorCount: Int,
-    allBooks: [Book!]!,
-    allAuthors(author: String): [Author!]!
+    allBooks(author: String): [Book!]!,
+    allAuthors: [Author!]!
   }
 `
 const resolvers = {

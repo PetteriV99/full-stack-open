@@ -122,6 +122,17 @@ const typeDefs = `
     allBooks(author: String, genre: String): [Book!],
     allAuthors: [Author]
   }
+
+  type Mutation {
+    addBook(
+      id: String,
+      title: String!,
+      author: String,
+      published: String,
+      genres: [String]
+    ): Book
+  }
+
 `
 const resolvers = {
   Query: {

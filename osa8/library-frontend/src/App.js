@@ -29,7 +29,7 @@ const ALL_BOOKS = gql`
 
 const App = () => {
   const [page, setPage] = useState('authors')
-  const result = useQuery(ALL_AUTHORS, ALL_BOOKS)
+  const result = useQuery(ALL_AUTHORS)
 
   if (result.loading)  {
     return <div>loading...</div>

@@ -1,8 +1,9 @@
 const Authors = (props) => {
-  if (!props.show) {
-    return null
-  }
+
   const authors = props.authors
+  if (!authors) {
+    return (<p>no data</p>)
+  }
 
   return (
     <div>

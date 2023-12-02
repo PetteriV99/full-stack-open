@@ -1,9 +1,9 @@
 const Books = (props) => {
-  if (!props.show) {
-    return null
-  }
 
   const books = props.books
+  if (!books) {
+    return (<p>no data</p>)
+  }
 
   return (
     <div>

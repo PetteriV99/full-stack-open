@@ -35,7 +35,7 @@ const App = () => {
   const authors = useQuery(ALL_AUTHORS)
   const books = useQuery(ALL_BOOKS)
 
-  if (authors.result.loading)  {
+  if (authors.loading || books.loading)  {
     return <div>loading...</div>
   }
 
@@ -50,7 +50,7 @@ const App = () => {
 
       <Routes>
         <Route path="/" element={<Authors authors={authors.data.allAuthors}/>} />
-        <Route path="/books" element={<Books />} />
+        <Route path="/books" element={<Books books={books.data.allBooks}/>} />
         <Route path="/add" element={<NewBook />} />
       </Routes>
     </div>

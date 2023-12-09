@@ -21,10 +21,6 @@ const NewBook = (props) => {
 
   const [ createBook ] = useMutation(CREATE_BOOK)
 
-  if (!props.show) {
-    return null
-  }
-
   const submit = async (event) => {
     event.preventDefault()
 

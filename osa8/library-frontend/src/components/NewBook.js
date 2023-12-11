@@ -8,7 +8,12 @@ const CREATE_BOOK = gql`
       author: $author,
       published: $published,
       genres: $genres
-    )
+    ) {
+      title
+      author
+      published
+      genres
+    }
   }
 `
 
@@ -24,7 +29,7 @@ const NewBook = (props) => {
   const submit = async (event) => {
     event.preventDefault()
 
-    createBook({ variables: {title, author, published, genres}})
+    createBook({ variables: { title, author, published, genres }})
 
     setTitle('')
     setPublished('')

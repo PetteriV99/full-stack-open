@@ -1,8 +1,20 @@
+import { useState } from 'react'
+
 const Authors = (props) => {
+
+  const [name, setName] = useState('')
+  const [born, setBorn] = useState('')
 
   const authors = props.authors
   if (!authors) {
     return (<p>no data</p>)
+  }
+
+  const submit = async (event) => {
+    event.preventDefault()
+
+    setName('')
+    setBorn('')
   }
 
   return (
@@ -24,6 +36,24 @@ const Authors = (props) => {
           ))}
         </tbody>
       </table>
+      <h2>set birthyear</h2>
+      <form onSubmit={submit}>
+        <div>
+          name
+          <input
+            value={name}
+            onChange={({ target }) => setName(target.value)}
+          />
+        </div>
+        <div>
+          born
+          <input
+            value={born}
+            onChange={({ target }) => setBorn(target.value)}
+          />
+        </div>
+        <button type="submit">update author</button>
+      </form>
     </div>
   )
 }

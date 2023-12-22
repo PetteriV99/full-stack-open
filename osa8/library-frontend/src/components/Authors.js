@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { gql, useMutation  } from '@apollo/client'
+import Select from 'react-select';
 
 const EDIT_AUTHOR = gql`
   mutation editAuthor($name: String!, $born: String!) {
@@ -15,6 +16,7 @@ const Authors = (props) => {
 
   const [name, setName] = useState('')
   const [born, setBorn] = useState('')
+  const [selectedOption, setSelectedOption] = useState(null)
 
   const [ changeName ] = useMutation(EDIT_AUTHOR)
 
@@ -52,6 +54,11 @@ const Authors = (props) => {
         </tbody>
       </table>
       <h2>set birthyear</h2>
+      <Select
+        defaultValue={selectedOption}
+        onChange={setSelectedOption}
+        options={authors}
+      />
       <form onSubmit={submit}>
         <div>
           name

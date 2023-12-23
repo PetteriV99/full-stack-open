@@ -61,13 +61,6 @@ const Authors = (props) => {
       />
       <form onSubmit={submit}>
         <div>
-          name
-          <input
-            value={name}
-            onChange={({ target }) => setName(target.value)}
-          />
-        </div>
-        <div>
           born
           <input
             value={born}

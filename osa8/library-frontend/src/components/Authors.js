@@ -25,6 +25,10 @@ const Authors = (props) => {
     return (<p>no data</p>)
   }
 
+  const options = authors.map(author => {
+    return {value: author.name, label: author.name}
+  })
+
   const submit = async (event) => {
     event.preventDefault()
 
@@ -57,7 +61,7 @@ const Authors = (props) => {
       <Select
         defaultValue={selectedOption}
         onChange={setSelectedOption}
-        options={authors}
+        options={options}
       />
       <form onSubmit={submit}>
         <div>

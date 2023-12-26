@@ -14,7 +14,6 @@ const EDIT_AUTHOR = gql`
 
 const Authors = (props) => {
 
-  const [name, setName] = useState('')
   const [born, setBorn] = useState('')
   const [selectedOption, setSelectedOption] = useState(null)
 
@@ -32,9 +31,8 @@ const Authors = (props) => {
   const submit = async (event) => {
     event.preventDefault()
 
-    changeName({ variables: { name, born } })
+    changeName({ variables: { name: selectedOption.value, born } })
 
-    setName('')
     setBorn('')
   }
 

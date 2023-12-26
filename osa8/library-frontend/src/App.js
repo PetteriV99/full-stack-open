@@ -39,6 +39,10 @@ const App = () => {
     return <div>loading...</div>
   }
 
+  if (!authors.data) {
+    return <div>no data</div>
+  }
+
   return (
     <Router>
     <div>

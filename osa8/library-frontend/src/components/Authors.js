@@ -7,8 +7,8 @@ const EDIT_AUTHOR = gql`
     editAuthor(name: $name, born: $born) {
       name
       born
+      id
     }
-    id
   }
 `
 

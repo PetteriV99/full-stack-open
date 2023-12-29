@@ -131,8 +131,8 @@ const typeDefs = `
       genres: [String]
     ): Book!
     editAuthor(
-      name: String!
-      born: String!
+      name: String!, 
+      setBornTo: Int!
     ): Author
   }
 

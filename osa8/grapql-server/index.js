@@ -170,7 +170,7 @@ const resolvers = {
         authors = authors.concat(author)
       }
       const book = { ...args, id: uuid() }
-      books = books.concat(book)
+      books = Author.collection.save(book)
       return book
     },
     editAuthor: (root, args) => {

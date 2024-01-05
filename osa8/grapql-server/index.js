@@ -143,17 +143,8 @@ const resolvers = {
     dummy: () => 0,
     bookCount: async () => Book.collection.countDocuments(),
     authorCount: async () => Author.collection.countDocuments(),
-    allBooks: (root, args) => {
-      return books.filter(book => {
-        let isMatch = true;
-        if (args.author) {
-          isMatch = isMatch && book.author === args.author;
-        }
-        if (args.genre) {
-          isMatch = isMatch && book.genres.find(genre => genre === args.genre);
-        }
-        return isMatch;
-      });
+    allBooks: async (root, args) => {
+      return Book.find({})
     },
     allAuthors: () => authors
   },

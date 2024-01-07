@@ -155,14 +155,17 @@ const resolvers = {
     bookCount: (root) => books.filter(book => book.author === root.name).length
   },
   Mutation: {
-    addBook: (root, args) => {
-      if (!authors.find(a => a.name === args.author)) {
-        const author = {name: args.author, id: uuid()}
-        authors = authors.concat(author)
+    addBook: async (root, args) => {
+      const author = await Author.findOne({name: args.author})
+      if (!author) {
+        const newAuthor = new Author({name: args.author})
+        await newAuthor.save()
+        args.author = newAuthor.id
+      } else {
+        args.author = author.id
       }
-      const book = { ...args, id: uuid() }
-      books = Author.collection.save(book)
-      return book
+      const book = new Book({ ...args })
+      return book.save()
     },
     editAuthor: (root, args) => {
       const author = authors.find(a => a.name === args.name)

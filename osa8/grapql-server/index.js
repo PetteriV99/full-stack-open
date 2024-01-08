@@ -24,10 +24,10 @@ mongoose.connect(MONGODB_URI)
 const typeDefs = `
 
   type Book {
-    title: String!
-    published: Int!
-    author: Author!
-    genres: [String!]!
+    title: String!,
+    published: Int!,
+    author: Author!,
+    genres: [String!]!,
     id: ID!
   }
 
@@ -66,41 +66,49 @@ const resolvers = {
     bookCount: async () => Book.collection.countDocuments(),
     authorCount: async () => Author.collection.countDocuments(),
     allBooks: async (root, args) => {
-      return Book.find({})
+      if (args.author) {
+        const author = await Author.findOne({ name: args.author });
+        if (author) {
+          return Book.find({ author: author.id });
+        } else {
+          return [];
+        }
+      }
+      return Book.find({});
     },
     allAuthors: async (root, args) => {
-      return Author.find({})
-    }
+      return Author.find({});
+    },
   },
   Author: {
     name: (root) => root.name,
     id: (root) => root.id,
     born: (root) => root.born,
-    bookCount: (root) => root.bookCount
+    bookCount: (root) => root.bookCount,
   },
   Mutation: {
     addBook: async (root, args) => {
-      const author = await Author.findOne({name: args.author})
+      const author = await Author.findOne({ name: args.author });
       if (!author) {
-        const newAuthor = new Author({name: args.author})
-        await newAuthor.save()
-        args.author = newAuthor.id
+        const newAuthor = new Author({ name: args.author });
+        await newAuthor.save();
+        args.author = newAuthor.id;
       } else {
-        args.author = author.id
+        args.author = author.id;
       }
-      const book = new Book({ ...args })
-      return book.save()
+      const book = new Book({ ...args });
+      return book.save();
     },
     editAuthor: async (root, args) => {
-      const author = await Author.findOne({name: args.name})
+      const author = await Author.findOne({ name: args.name });
       if (!author) {
-        return null
+        return null;
       }
-      author.born = args.born
-      return author.save()
-    }
-  }
-}
+      author.born = args.born;
+      return author.save();
+    },
+  },
+};
 
 const server = new ApolloServer({
   typeDefs,

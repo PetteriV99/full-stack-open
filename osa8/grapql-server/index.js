@@ -95,28 +95,30 @@ const resolvers = {
   },
   Mutation: {
     addBook: async (root, args) => {
-      try {
-        const author = await Author.findOne({ name: args.author });
+        const author = await Author.findOne({ name: args.author })
         if (!author) {
-          const newAuthor = new Author({ name: args.author });
-          await newAuthor.save();
-          args.author = newAuthor.id;
+          const newAuthor = new Author({ name: args.author })
+          await newAuthor.save()
+          args.author = newAuthor.id
         } else {
-          args.author = author.id;
+          args.author = author.id
         }
-        const book = new Book({ ...args });
-        return book.save();
-      } catch (error) {
-        throw new GraphQLError('Saving book failed', {
-          extensions: {
-            code: 'BAD_USER_INPUT',            
-            invalidArgs: args.title,           
-            error
-          }
-        })
-      }
+        const book = new Book({ ...args })
+        try {
+          return book.save()
+        } catch (error) {
+          console.log(error)
+          throw new GraphQLError('Saving book failed', {
+            extensions: {
+              code: 'BAD_USER_INPUT',            
+              invalidArgs: args,           
+              error
+            }
+          })
+        }
     },
     editAuthor: async (root, args) => {
+      // No error handling since an empty object was to be returned??
       const author = await Author.findOne({ name: args.name })
       if (!author) {
         return {}

@@ -38,6 +38,7 @@ const resolvers = {
       name: (root) => { return root.name },
       id: (root) => root.id,
       born: (root) => root.born,
+      // fix this later
       bookCount: (root) => root.bookCount,
     },
     Mutation: {

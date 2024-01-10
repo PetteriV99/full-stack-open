@@ -1,3 +1,7 @@
+const { GraphQLError } = require('graphql');
+const Book = require('./models/Book')
+const Author = require('./models/Author')
+
 const resolvers = {
     Query: {
       dummy: () => 0,

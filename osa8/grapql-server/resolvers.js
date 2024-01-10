@@ -38,7 +38,6 @@ const resolvers = {
       name: (root) =>  root.name,
       id: (root) => root.id,
       born: (root) => root.born,
-      // fix this later
       bookCount: async (root) => { 
         try {
             const books = await Book.countDocuments({ author: root.id })

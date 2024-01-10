@@ -58,27 +58,27 @@ const resolvers = {
             })
           }
 
-          const author = await Author.findOne({ name: args.author });
+          const author = await Author.findOne({ name: args.author })
 
           if (!author) {
-            const newAuthor = new Author({ name: args.author });
-            await newAuthor.save();
-            args.author = newAuthor.id;
+            const newAuthor = new Author({ name: args.author })
+            await newAuthor.save()
+            args.author = newAuthor.id
           } else {
-            args.author = author.id;
+            args.author = author.id
           }
-          const book = new Book({ ...args });
+          const book = new Book({ ...args })
           try {
-            return book.save();
+            return book.save()
           } catch (error) {
-            console.log(error);
+            console.log(error)
             throw new GraphQLError("Saving book failed", {
               extensions: {
                 code: "BAD_USER_INPUT",
                 invalidArgs: args,
                 error,
               },
-            });
+            })
           }
       },
       editAuthor: async (root, args, { currentUser }) => {
@@ -86,7 +86,7 @@ const resolvers = {
         if (!currentUser) {
             throw new GraphQLError("wrong credentials", {
               extensions: { code: "BAD_USER_INPUT" },
-            });
+            })
         }
 
         // No error handling since an empty object was to be returned??

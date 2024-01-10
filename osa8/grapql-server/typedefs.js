@@ -21,6 +21,17 @@ const typeDefs = `
     authorCount: Int,
     allBooks(author: String, genre: String): [Book],
     allAuthors: [Author]
+    me: User
+  }
+
+  type User {
+    username: String!
+    favoriteGenre: String!
+    id: ID!
+  }
+  
+  type Token {
+    value: String!
   }
 
   type Mutation {
@@ -34,30 +45,13 @@ const typeDefs = `
       name: String!, 
       setBornTo: Int!
     ): Author
-  }
-
-  type User {
-    username: String!
-    favoriteGenre: String!
-    id: ID!
-  }
-  
-  type Token {
-    value: String!
-  }
-  
-  type Query {
-    me: User
-  }
-  
-  type Mutation {
     createUser(
-      username: String!
-      favoriteGenre: String!
-    ): User
+        username: String!
+        favoriteGenre: String!
+      ): User
     login(
-      username: String!
-      password: String!
+        username: String!
+        password: String!
     ): Token
   }
 

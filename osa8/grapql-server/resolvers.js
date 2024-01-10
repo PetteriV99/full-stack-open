@@ -35,11 +35,20 @@ const resolvers = {
       },
     },
     Author: {
-      name: (root) => { return root.name },
+      name: (root) =>  root.name,
       id: (root) => root.id,
       born: (root) => root.born,
       // fix this later
-      bookCount: (root) => root.bookCount,
+      bookCount: async (root) => { 
+        try {
+            const books = await Book.countDocuments({ author: root.id })
+            return books
+        } catch (error) {
+            throw new GraphQLError("unable to get book count", {
+                extensions: { code: "INTERNAL_SERVER_ERROR" },
+            })
+        }
+      },
     },
     Mutation: {
       addBook: async (root, args, { currentUser }) => {
@@ -47,7 +56,7 @@ const resolvers = {
           if (!currentUser) {
             throw new GraphQLError("wrong credentials", {
               extensions: { code: "BAD_USER_INPUT" },
-            });
+            })
           }
 
           const author = await Author.findOne({ name: args.author });

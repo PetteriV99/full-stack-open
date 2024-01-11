@@ -69,7 +69,7 @@ const resolvers = {
           }
           const book = new Book({ ...args })
           try {
-            return book.save()
+            return (await book.save()).populate("author")
           } catch (error) {
             console.log(error)
             throw new GraphQLError("Saving book failed", {

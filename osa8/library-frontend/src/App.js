@@ -23,10 +23,13 @@ const ALL_AUTHORS = gql`
 const ALL_BOOKS = gql`
   query {
     allBooks {
-      title,
-      published,
-      author,
+      genres
       id
+      published
+      title
+      author {
+        id
+      }
     }
   }
 `
@@ -40,6 +43,10 @@ const App = () => {
   }
 
   if (!authors.data) {
+    return <div>no data</div>
+  }
+  console.log(books)
+  if (!books.data) {
     return <div>no data</div>
   }
 

@@ -29,6 +29,9 @@ const ALL_BOOKS = gql`
       title
       author {
         id
+        name
+        born
+        bookCount
       }
     }
   }

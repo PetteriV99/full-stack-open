@@ -1,6 +1,6 @@
-import { useState } from 'react'
-import { gql, useMutation  } from '@apollo/client'
-import Select from 'react-select';
+import { useState } from "react"
+import { gql, useMutation } from "@apollo/client"
+import Select from "react-select"
 
 const EDIT_AUTHOR = gql`
   mutation editAuthor($name: String!, $born: String!) {
@@ -10,31 +10,29 @@ const EDIT_AUTHOR = gql`
       id
     }
   }
-`
+`;
 
-const Authors = (props) => {
-
-  const [born, setBorn] = useState('')
+const Authors = ({ authors, token }) => {
+  const [born, setBorn] = useState("")
   const [selectedOption, setSelectedOption] = useState(null)
 
-  const [ changeName ] = useMutation(EDIT_AUTHOR)
+  const [changeName] = useMutation(EDIT_AUTHOR)
 
-  const authors = props.authors
   if (!authors) {
-    return (<p>no data</p>)
+    return <p>no data</p>
   }
 
-  const options = authors.map(author => {
-    return {value: author.name, label: author.name}
-  })
+  const options = authors.map((author) => {
+    return { value: author.name, label: author.name }
+  });
 
   const submit = async (event) => {
     event.preventDefault()
 
     changeName({ variables: { name: selectedOption.value, born } })
 
-    setBorn('')
-  }
+    setBorn("")
+  };
 
   return (
     <div>
@@ -55,24 +53,28 @@ const Authors = (props) => {
           ))}
         </tbody>
       </table>
-      <h2>set birthyear</h2>
-      <Select
-        defaultValue={selectedOption}
-        onChange={setSelectedOption}
-        options={options}
-      />
-      <form onSubmit={submit}>
+      {token ? (
         <div>
-          born
-          <input
-            value={born}
-            onChange={({ target }) => setBorn(target.value)}
+          <h2>set birthyear</h2>
+          <Select
+            defaultValue={selectedOption}
+            onChange={setSelectedOption}
+            options={options}
           />
+          <form onSubmit={submit}>
+            <div>
+              born
+              <input
+                value={born}
+                onChange={({ target }) => setBorn(target.value)}
+              />
+            </div>
+            <button type="submit">update author</button>
+          </form>
         </div>
-        <button type="submit">update author</button>
-      </form>
+      ) : null}
     </div>
-  )
-}
+  );
+};
 
-export default Authors
+export default Authors;

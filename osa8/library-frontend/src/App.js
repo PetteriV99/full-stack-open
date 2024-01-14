@@ -1,49 +1,24 @@
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
-import Login from './components/Login';
+import Login from './components/Login'
 
-import React, { useState } from 'react';
+import { ALL_AUTHORS, ALL_BOOKS } from './queries'
+
+import React, { useState } from 'react'
 
 import {
   BrowserRouter as Router,
   Routes, Route, Link
 } from 'react-router-dom'
 
-import { gql, useQuery } from '@apollo/client'
-
-const ALL_AUTHORS = gql`
-  query {
-    allAuthors  {
-      name,
-      born,
-      bookCount,
-      id
-    }
-  }
-`
-
-const ALL_BOOKS = gql`
-  query {
-    allBooks {
-      genres
-      id
-      published
-      title
-      author {
-        id
-        name
-        born
-        bookCount
-      }
-    }
-  }
-`
+import { useQuery, useApolloClient } from '@apollo/client'
 
 const App = () => {
   const authors = useQuery(ALL_AUTHORS)
   const books = useQuery(ALL_BOOKS)
   const [token, setToken] = useState(null)
+  const client = useApolloClient()
 
   if (authors.loading || books.loading)  {
     return <div>loading...</div>
@@ -57,21 +32,33 @@ const App = () => {
     return <div>no books data</div>
   }
 
+  const logout = () => {    
+    setToken(null)    
+    localStorage.clear()    
+    client.resetStore()  
+  }
+
   return (
     <Router>
     <div>
       <div>
         <Link to="/">authors</Link>
         <Link to="/books">books</Link>
-        <Link to="/add">add</Link>
-        <Link to="/login">add</Link>
+        {token 
+        ? 
+        <div>
+            <Link to="/add">add books</Link>
+            <button onClick={logout}>logout</button> 
+        </div>
+        : 
+        <Link to="/login">login</Link>}
       </div>
 
       <Routes>
         <Route path="/" element={<Authors authors={authors.data.allAuthors}/>} />
         <Route path="/books" element={<Books books={books.data.allBooks}/>} />
         <Route path="/add" element={<NewBook />} />
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login setToken={setToken}/>} />
       </Routes>
     </div>
     </Router>

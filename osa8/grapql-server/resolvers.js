@@ -95,7 +95,8 @@ const resolvers = {
         if (!author) {
           return {}
         }
-        author.born = args.born
+
+        author.born = args.setBornTo
         return author.save()
       },
       createUser: async (root, args) => {

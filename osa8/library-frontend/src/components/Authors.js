@@ -1,13 +1,19 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useMutation } from "@apollo/client"
 import Select from "react-select"
 import { EDIT_AUTHOR } from "../queries";
 
-const Authors = ({ authors, token }) => {
-  const [born, setBorn] = useState("")
+const Authors = ({ authors }) => {
+  const [born, setBorn] = useState(1999)
   const [selectedOption, setSelectedOption] = useState(null)
+  const [loggedIn, setLoggedIn] = useState(false)
 
-  const [changeName] = useMutation(EDIT_AUTHOR)
+  const [changeBirthyear] = useMutation(EDIT_AUTHOR)
+
+  useEffect(() => {
+    const token = localStorage.getItem('library-user-token')
+    setLoggedIn(!!token)
+  }, [])
 
   if (!authors) {
     return <p>no data</p>
@@ -20,9 +26,9 @@ const Authors = ({ authors, token }) => {
   const submit = async (event) => {
     event.preventDefault()
 
-    changeName({ variables: { name: selectedOption.value, born } })
+    changeBirthyear({ variables: { name: selectedOption.value, setBornTo: Number(born) } })
 
-    setBorn("")
+    setBorn(1999)
   };
 
   return (
@@ -44,7 +50,7 @@ const Authors = ({ authors, token }) => {
           ))}
         </tbody>
       </table>
-      {token ? (
+      {loggedIn ? (
         <div>
           <h2>set birthyear</h2>
           <Select

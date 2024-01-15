@@ -5,7 +5,7 @@ import Login from './components/Login'
 
 import { ALL_AUTHORS, ALL_BOOKS } from './queries'
 
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 import {
   BrowserRouter as Router,
@@ -19,6 +19,11 @@ const App = () => {
   const books = useQuery(ALL_BOOKS)
   const [token, setToken] = useState(null)
   const client = useApolloClient()
+
+  useEffect(() => {
+    const token = localStorage.getItem('library-user-token')
+    setToken(token)
+  }, [])
 
   if (authors.loading || books.loading)  {
     return <div>loading...</div>

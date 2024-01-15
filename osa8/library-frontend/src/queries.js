@@ -29,11 +29,12 @@ const ALL_BOOKS = gql`
 `
 
 const EDIT_AUTHOR = gql`
-  mutation editAuthor($name: String!, $born: String!) {
-    editAuthor(name: $name, born: $born) {
+  mutation editAuthor($name: String!, $setBornTo: Int!) {
+    editAuthor(name: $name, setBornTo: $setBornTo) {
       name
       born
       id
+      bookCount
     }
   }
 `

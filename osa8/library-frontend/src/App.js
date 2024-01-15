@@ -46,19 +46,12 @@ const App = () => {
   return (
     <Router>
     <div>
-      <div>
-        <Link to="/">authors</Link>
-        <Link to="/books">books</Link>
-        {token 
-        ? 
-        <div>
-            <Link to="/add">add books</Link>
-            <button onClick={logout}>logout</button> 
-        </div>
-        : 
-        <Link to="/login">login</Link>}
+      <div className='nav'>
+        <Link style={linkButtonStyle} to="/">authors</Link>
+        <Link style={linkButtonStyle} to="/books">books</Link>
+        {token ? <Link style={linkButtonStyle} to="/add">add books</Link> : null}
+        {token ? <button style={linkButtonStyle} onClick={logout}>logout</button> : <Link style={linkButtonStyle} to="/login">login</Link>}
       </div>
-
       <Routes>
         <Route path="/" element={<Authors authors={authors.data.allAuthors}/>} />
         <Route path="/books" element={<Books books={books.data.allBooks}/>} />
@@ -68,6 +61,17 @@ const App = () => {
     </div>
     </Router>
   )
+}
+
+const linkButtonStyle = {
+  textDecoration: 'none',
+  padding: '1px 2px',
+  background: '#fff',
+  border: 'none',
+  cursor: 'pointer',
+  marginRight: '10px',
+  display: 'inline-block',
+  textAlign: 'center',
 }
 
 export default App

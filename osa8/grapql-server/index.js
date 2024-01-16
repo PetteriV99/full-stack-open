@@ -3,8 +3,8 @@ const { startStandaloneServer } = require('@apollo/server/standalone')
 const { v1: uuid } = require('uuid')
 const jwt = require('jsonwebtoken')
 
-const typeDefs = require('./typedefs');
-const resolvers = require('./resolvers');
+const typeDefs = require('./typedefs')
+const resolvers = require('./resolvers')
 const User = require('./models/user')
 
 

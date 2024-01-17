@@ -15,7 +15,6 @@ const Login = ({ setToken }) => {
   useEffect(() => {
     if (result.data) {
       const token = result.data.login.value
-      console.log(token)
       setToken(token)
       localStorage.setItem('library-user-token', token)
     }

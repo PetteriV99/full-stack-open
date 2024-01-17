@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 const Books = (props) => {
 
   const [activeFilter, setActiveFilter] = useState('')
-  console.log(activeFilter)
 
   const books = props.books
   if (!books) {

@@ -2,6 +2,7 @@ import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import Login from './components/Login'
+import Recommendations from './components/Recommendations'
 
 import { ALL_AUTHORS, ALL_BOOKS } from './queries'
 
@@ -50,12 +51,14 @@ const App = () => {
         <Link style={linkButtonStyle} to="/">authors</Link>
         <Link style={linkButtonStyle} to="/books">books</Link>
         {token ? <Link style={linkButtonStyle} to="/add">add books</Link> : null}
+        {token ? <Link style={linkButtonStyle} to="/recommendations">recommend</Link> : null}
         {token ? <button style={linkButtonStyle} onClick={logout}>logout</button> : <Link style={linkButtonStyle} to="/login">login</Link>}
       </div>
       <Routes>
         <Route path="/" element={<Authors authors={authors.data.allAuthors}/>} />
         <Route path="/books" element={<Books books={books.data.allBooks}/>} />
         <Route path="/add" element={<NewBook />} />
+        <Route path="/recommendations" books={books.data.allBooks} element={<Recommendations />} />
         <Route path="/login" element={<Login setToken={setToken}/>} />
       </Routes>
     </div>

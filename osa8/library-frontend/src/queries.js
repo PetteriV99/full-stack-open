@@ -69,4 +69,14 @@ const LOGIN = gql`
   }
 `
 
-export {ALL_AUTHORS, ALL_BOOKS, EDIT_AUTHOR, CREATE_BOOK, LOGIN}
+const ME = gql`
+  query {
+    me {
+      favoriteGenre
+      id
+      username
+    }
+  }
+`
+
+export {ALL_AUTHORS, ALL_BOOKS, EDIT_AUTHOR, CREATE_BOOK, LOGIN, ME}

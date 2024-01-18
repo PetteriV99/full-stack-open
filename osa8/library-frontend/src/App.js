@@ -4,7 +4,7 @@ import NewBook from './components/NewBook'
 import Login from './components/Login'
 import Recommendations from './components/Recommendations'
 
-import { ALL_AUTHORS, ALL_BOOKS } from './queries'
+import { ALL_AUTHORS, ALL_BOOKS, ME } from './queries'
 
 import React, { useState, useEffect } from 'react'
 
@@ -16,17 +16,23 @@ import {
 import { useQuery, useApolloClient } from '@apollo/client'
 
 const App = () => {
-  const authors = useQuery(ALL_AUTHORS)
-  const books = useQuery(ALL_BOOKS)
+  const [genreToFilter, setGenreToFilter] = useState(null)
+  //const [authorToFilter, setAuthorToFilter] = useState(null)
   const [token, setToken] = useState(null)
   const client = useApolloClient()
+
+  const authors = useQuery(ALL_AUTHORS)
+  const books = useQuery(ALL_BOOKS, {
+    variables: { genreToFilter }
+  })
+  const user = useQuery(ME)
 
   useEffect(() => {
     const token = localStorage.getItem('library-user-token')
     setToken(token)
   }, [])
 
-  if (authors.loading || books.loading)  {
+  if (authors.loading)  {
     return <div>loading...</div>
   }
 
@@ -34,8 +40,12 @@ const App = () => {
     return <div>no author data</div>
   }
 
+  if (books.loading)  {
+    return <div>loading...</div>
+  }
+
   if (!books.data) {
-    return <div>no books data</div>
+    return <div>no book data</div>
   }
 
   const logout = () => {    
@@ -56,9 +66,9 @@ const App = () => {
       </div>
       <Routes>
         <Route path="/" element={<Authors authors={authors.data.allAuthors}/>} />
-        <Route path="/books" element={<Books books={books.data.allBooks}/>} />
+        <Route path="/books" element={<Books books={books.data.allBooks} setFilter={setGenreToFilter}/>} />
         <Route path="/add" element={<NewBook />} />
-        <Route path="/recommendations" books={books.data.allBooks} element={<Recommendations />} />
+        <Route path="/recommendations" element={<Recommendations books={books.data.allBooks} user={user} setFilter={setGenreToFilter} />} />
         <Route path="/login" element={<Login setToken={setToken}/>} />
       </Routes>
     </div>

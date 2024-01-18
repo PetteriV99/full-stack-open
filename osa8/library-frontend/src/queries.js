@@ -12,8 +12,8 @@ const ALL_AUTHORS = gql`
 `
 
 const ALL_BOOKS = gql`
-  query {
-    allBooks {
+  query allBooks($genreToFilter: String, $authorToFilter: String){
+    allBooks(genre: $genreToFilter, author: $authorToFilter) {
       genres
       id
       published

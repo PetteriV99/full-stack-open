@@ -1,28 +1,16 @@
-import React, { useState } from 'react'
+import React from 'react'
 
-const Books = (props) => {
+const Books = ({books, setFilter }) => {
 
-  const [activeFilter, setActiveFilter] = useState('')
-
-  const books = props.books
   if (!books) {
     return (<p>no data</p>)
   }
 
-  const genresArray = books.map(book => { return book.genres })
-  const genres = [].concat(...genresArray)
-  const filters = [...new Set(genres)]
+  const filters = ['history', 'romance', 'horror']
 
   const handleClick = (genre) => {
-    if (activeFilter) {
-      setActiveFilter('')
-    }
-    else {
-      setActiveFilter(genre)
-    }
+    setFilter(genre)
   }
-
-  const filteredBooks = activeFilter !== '' ? books.filter((book => { return book.genres.includes(activeFilter)})) : books
 
   return (
     <div>
@@ -34,7 +22,7 @@ const Books = (props) => {
             <th>author</th>
             <th>published</th>
           </tr>
-          {filteredBooks.map((a) => (
+          {books.map((a) => (
             <tr key={a.id}>
               <td>{a.title}</td>
               <td>{a.author.name}</td>
@@ -46,12 +34,13 @@ const Books = (props) => {
       {filters.map((genre, index) => (
           <button 
           style={{
-            backgroundColor: activeFilter === genre ? '#007BFF' : 'transparent',
-            color: activeFilter === genre ? '#fff' : '#007BFF',
-            border: `2px solid ${activeFilter === genre ? '#007BFF' : '#ccc'}`,
+            border: `2px solid`,
           }}
           key={index} onClick={() => handleClick(genre)}>{genre}</button>
         ))}
+        <button style={{
+            border: `2px solid`,
+          }} onClick={() => handleClick('')}>all genres</button>
     </div>
   )
 }

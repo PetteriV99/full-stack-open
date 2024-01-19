@@ -8,18 +8,13 @@ const NewBook = (props) => {
   const [published, setPublished] = useState(0)
   const [genre, setGenre] = useState('')
   const [genres, setGenres] = useState([])
+  const genreToFilter = props.filter
 
   const [ createBook ] = useMutation(CREATE_BOOK, {
     onError: (error) => {
       console.log(error)
     },
-    update: (cache, response) => {
-      cache.updateQuery({ query: ALL_BOOKS }, ({ allBooks }) => {
-        return {
-          allBooks: allBooks.concat(response.data.addBook)
-        }
-      })
-    }
+    refetchQueries: [{query: ALL_BOOKS}]
   })
 
   const submit = async (event) => {

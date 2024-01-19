@@ -67,7 +67,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<Authors authors={authors.data.allAuthors}/>} />
         <Route path="/books" element={<Books books={books.data.allBooks} setFilter={setGenreToFilter}/>} />
-        <Route path="/add" element={<NewBook />} />
+        <Route path="/add" element={<NewBook filter={genreToFilter}/>} />
         <Route path="/recommendations" element={<Recommendations books={books.data.allBooks} user={user} setFilter={setGenreToFilter} />} />
         <Route path="/login" element={<Login setToken={setToken}/>} />
       </Routes>

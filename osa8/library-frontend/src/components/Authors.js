@@ -21,7 +21,7 @@ const Authors = ({ authors }) => {
 
   const options = authors.map((author) => {
     return { value: author.name, label: author.name }
-  });
+  })
 
   const submit = async (event) => {
     event.preventDefault()
@@ -29,7 +29,7 @@ const Authors = ({ authors }) => {
     changeBirthyear({ variables: { name: selectedOption.value, setBornTo: Number(born) } })
 
     setBorn(1999)
-  };
+  }
 
   return (
     <div>
@@ -71,7 +71,7 @@ const Authors = ({ authors }) => {
         </div>
       ) : null}
     </div>
-  );
-};
+  )
+}
 
 export default Authors;

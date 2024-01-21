@@ -23,7 +23,7 @@ const Login = ({ setToken }) => {
   const handleSubmit = (e) => {
     e.preventDefault()
     login({ variables: { username, password } })
-  };
+  }
 
   return (
     <div>

@@ -6,7 +6,7 @@ const NewBook = (props) => {
   const [title, setTitle] = useState('')
   const [author, setAuthor] = useState('')
   const [published, setPublished] = useState(0)
-  const [genre, setGenre] = useState('')
+  const [bookGenre, setBookGenre] = useState('')
   const [genres, setGenres] = useState([])
   const genreToFilter = props.filter
 
@@ -15,9 +15,9 @@ const NewBook = (props) => {
       console.log(error)
     },
     update: (cache, { data: { createBook } }) => {
-      const data = cache.readQuery({ query: ALL_BOOKS });
-      data.allBooks = [...data.allBooks, createBook];
-      cache.writeQuery({ query: ALL_BOOKS }, data);
+      const data = cache.readQuery({ query: ALL_BOOKS, variables: { genreToFilter } })
+      const newBooks = [...data.allBooks, createBook];
+      cache.writeQuery({ query: ALL_BOOKS , data: { allBooks: newBooks}})
     }
   })
 
@@ -30,12 +30,12 @@ const NewBook = (props) => {
     setPublished(0)
     setAuthor('')
     setGenres([])
-    setGenre('')
+    setBookGenre('')
   }
 
   const addGenre = () => {
-    setGenres(genres.concat(genre))
-    setGenre('')
+    setGenres(genres.concat(bookGenre))
+    setBookGenre('')
   }
 
   return (
@@ -65,8 +65,8 @@ const NewBook = (props) => {
         </div>
         <div>
           <input
-            value={genre}
-            onChange={({ target }) => setGenre(target.value)}
+            value={bookGenre}
+            onChange={({ target }) => setBookGenre(target.value)}
           />
           <button onClick={addGenre} type="button">
             add genre

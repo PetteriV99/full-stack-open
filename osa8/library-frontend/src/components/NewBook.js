@@ -14,7 +14,11 @@ const NewBook = (props) => {
     onError: (error) => {
       console.log(error)
     },
-    refetchQueries: [{query: ALL_BOOKS}]
+    update: (cache, { data: { createBook } }) => {
+      const data = cache.readQuery({ query: ALL_BOOKS });
+      data.allBooks = [...data.allBooks, createBook];
+      cache.writeQuery({ query: ALL_BOOKS }, data);
+    }
   })
 
   const submit = async (event) => {
